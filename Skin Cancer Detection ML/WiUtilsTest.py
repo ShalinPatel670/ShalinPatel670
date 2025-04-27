@@ -8,8 +8,6 @@ print(type(images))
 print("         ============           ")
 df = images
 
-# with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
-#     print(df)
 
 column_names = list(df.columns.values)
 print(column_names)
