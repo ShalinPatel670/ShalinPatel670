@@ -5,11 +5,10 @@ import cv2
 import zipfile
 import tqdm
 
-# Defining global variable paths
 input_image_path = r"C:\Users\16145\OneDrive\Desktop\skin_ml\540_images.zip"
 output_zip_path = r"C:\Users\16145\OneDrive\Desktop\skin_ml\processed_images.zip"
 
-# Function to load images from a zip file and return them as an array
+
 def loadImagesFromZip(zip_path):
     images = []
     with zipfile.ZipFile(r"C:\Users\16145\OneDrive\Desktop\skin_ml\540_images.zip", 'r') as zip_file:
@@ -21,12 +20,11 @@ def loadImagesFromZip(zip_path):
                     images.append(image_np)
     return images
 
-# Call the loadImagesFromZip function with the input_image_path
 images = loadImagesFromZip(input_image_path)
 
 print("# of Imgs: " + str(len(images)))
 
-# Display an example image
+
 plt.imshow(images[0])
 plt.show()
 
@@ -48,7 +46,7 @@ def preprocessing(data):
         # Normalization
         normalized_img = gray_img / 255.0
 
-        # Contrast enhancement using adaptive histogram equalization
+        # Contrast enhancement(adaptive histogram equalization)
         clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
         enhanced_img = clahe.apply(gray_img)
 
@@ -59,7 +57,7 @@ def preprocessing(data):
 
     return processed_images
 
-# Process the images from the zip file
+
 processed_images = preprocessing(images)
 
 # Save processed images into a new zip file
