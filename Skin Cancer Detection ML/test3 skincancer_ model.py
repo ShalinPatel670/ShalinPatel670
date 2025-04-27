@@ -34,10 +34,8 @@ with open(r"C:\Users\16145\OneDrive\Desktop\skin_ml\metadata_labels_multiclass_n
 X_clinical = clinical_data.values
 #y_labels = labels.values 
 
-# Define the path to the zip file
 zip_file_path = r"C:\Users\16145\OneDrive\Desktop\skin_ml\processed_images.zip"
 
-#Extract images from the zip file
 with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
      zip_ref.extractall('images')
 
@@ -104,7 +102,7 @@ test_dataset = tf.data.Dataset.from_tensor_slices(
     ((X_images_test, X_clinical_test), y_test)
 ).batch(batch_size)
 
-# Convert labels to TensorFlow-compatible format
+# Make labels tensorflow-compatible
 label_encoder = LabelEncoder()
 y_train_encoded = label_encoder.fit_transform(y_train)
 y_val_encoded = label_encoder.transform(y_val)
@@ -114,7 +112,6 @@ y_train = tf.convert_to_tensor(y_train_encoded, dtype=tf.float32)
 y_val = tf.convert_to_tensor(y_val_encoded, dtype=tf.float32)
 y_test = tf.convert_to_tensor(y_test_encoded, dtype=tf.float32)
 
-# Create an ImageDataGenerator for images
 image_data_generator = ImageDataGenerator(rescale=1.0/255.0)
 
 # Create dataframes for train and test sets
@@ -133,11 +130,9 @@ test_df = pd.DataFrame({
 
 num_classes = 3
 
-# Create input layers for images and clinical data
 image_input = Input(shape=(224, 224, 3))
 clinical_input = Input(shape=(num_features,))
 
-# Image branch
 x_image = Conv2D(32, (3, 3), activation='relu')(image_input)
 x_image = MaxPooling2D((2, 2))(x_image)
 x_image = Conv2D(64, (3, 3), activation='relu')(x_image)
@@ -146,20 +141,16 @@ x_image = Conv2D(128, (3, 3), activation='relu')(x_image)
 x_image = MaxPooling2D((2, 2))(x_image)
 x_image = Flatten()(x_image)
 
-# Clinical data branch
 x_clinical = Dense(512, activation='relu')(clinical_input)
 
-# Combine image and clinical data branches
 combined = concatenate([x_image, x_clinical])
 
 x = Dense(512, activation='relu')(combined)
 x = Dropout(0.5)(x)
 output = Dense(num_classes, activation='softmax')(x)
 
-# Create the model
 model = Model(inputs=[image_input, clinical_input], outputs=output)
 
-# Compile the model for multiclass classification
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
 num_epochs = 10
@@ -180,18 +171,17 @@ plt.title('Accuracy Over Epochs')
 plt.legend()
 plt.show()
 
-# Evaluate the model on the test set
+# Test set
 test_loss, test_accuracy = model.evaluate(
     x=[X_images_test, X_clinical_test],
     y=y_test,
     verbose=1
 )
 
-# Make predictions on the test set
 y_pred = model.predict([X_images_test, X_clinical_test])
 y_pred_classes = np.argmax(y_pred, axis=1)
 
-# Convert encoded labels back to original labels
+# Convert encoded labels back to original
 y_test_original = label_encoder.inverse_transform(y_test.numpy().astype(int))
 y_pred_original = label_encoder.inverse_transform(y_pred_classes)
 
@@ -201,7 +191,7 @@ print(classification_report(y_test_original, y_pred_original))
 print(f"Test Loss: {test_loss:.4f}")
 print(f"Test Accuracy: {test_accuracy:.4f}")
 
-# Generate and print the confusion matrix
+# Generate confusion matrix
 conf_matrix = confusion_matrix(y_test_original, y_pred_original)
 print("Confusion Matrix:")
 print(conf_matrix)
