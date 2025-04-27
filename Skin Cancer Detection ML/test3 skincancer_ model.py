@@ -181,17 +181,14 @@ test_loss, test_accuracy = model.evaluate(
 y_pred = model.predict([X_images_test, X_clinical_test])
 y_pred_classes = np.argmax(y_pred, axis=1)
 
-# Convert encoded labels back to original
 y_test_original = label_encoder.inverse_transform(y_test.numpy().astype(int))
 y_pred_original = label_encoder.inverse_transform(y_pred_classes)
 
-# Print classification report
 print("Classification Report:")
 print(classification_report(y_test_original, y_pred_original))
 print(f"Test Loss: {test_loss:.4f}")
 print(f"Test Accuracy: {test_accuracy:.4f}")
 
-# Generate confusion matrix
 conf_matrix = confusion_matrix(y_test_original, y_pred_original)
 print("Confusion Matrix:")
 print(conf_matrix)
