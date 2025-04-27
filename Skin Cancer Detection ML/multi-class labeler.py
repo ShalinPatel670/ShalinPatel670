@@ -1,6 +1,5 @@
 import csv
 
-# Read the original CSV file
 original_csv_path = r"C:\Users\16145\OneDrive\Desktop\skin_ml\540 metadata labels no header 1.csv"
 new_csv_path = r"C:\Users\16145\OneDrive\Desktop\skin_ml\metadata_labels_multiclass_numeric.csv"
 
@@ -11,7 +10,7 @@ class_mapping = {
     'squamous cell carcinoma': 2
 }
 
-# Open the original CSV file and create a new CSV file
+# Open original CSV file and create new CSV file
 with open(original_csv_path, 'r') as original_file, open(new_csv_path, 'w', newline='') as new_file:
     csv_reader = csv.reader(original_file)
     csv_writer = csv.writer(new_file)
