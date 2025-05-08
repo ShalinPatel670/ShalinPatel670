@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function Platform() {
   return (
@@ -65,11 +66,13 @@ export default function Platform() {
                   <span>Draw custom regions for project planning</span>
                 </li>
               </ul>
-              <Button className="bg-blue-600 hover:bg-blue-700">Request a Demo</Button>
+              <Link href="/request-demo">
+                <Button className="bg-blue-600 hover:bg-blue-700">Request a Demo</Button>
+              </Link>
             </div>
             <div className="bg-white p-2 rounded-lg shadow-md">
               <Image
-                src="/placeholder.svg?height=400&width=500&text=Interactive+Map+Interface"
+                src="https://i.ibb.co/BKFd7p5K/Screenshot-2025-04-30-235853.png"
                 alt="Interactive map interface"
                 width={500}
                 height={400}
@@ -83,7 +86,7 @@ export default function Platform() {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="bg-white p-2 rounded-lg shadow-md">
               <Image
-                src="/placeholder.svg?height=400&width=500&text=Cost+Analytics+Dashboard"
+                src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=2606&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Cost analytics dashboard"
                 width={500}
                 height={400}
@@ -134,7 +137,9 @@ export default function Platform() {
                   <span>Comparative analysis across regions and well types</span>
                 </li>
               </ul>
-              <Button className="bg-blue-600 hover:bg-blue-700">Explore Analytics</Button>
+              <Link href="/request-demo">
+                <Button className="bg-blue-600 hover:bg-blue-700">Explore Analytics</Button>
+              </Link>
             </div>
           </div>
         </TabsContent>
@@ -185,11 +190,13 @@ export default function Platform() {
                   <span>GIS-compatible formats for integration with mapping software</span>
                 </li>
               </ul>
-              <Button className="bg-blue-600 hover:bg-blue-700">View Sample Reports</Button>
+              <Link href="/request-demo">
+                <Button className="bg-blue-600 hover:bg-blue-700">View Sample Reports</Button>
+              </Link>
             </div>
             <div className="bg-white p-2 rounded-lg shadow-md">
               <Image
-                src="/placeholder.svg?height=400&width=500&text=Reports+and+Export+Options"
+                src="https://km-ext.ebs-dam.intuit.com/content/dam/km/external/pcg/LacerteImages/1-199/51043_03.jpg"
                 alt="Reports and export options"
                 width={500}
                 height={400}

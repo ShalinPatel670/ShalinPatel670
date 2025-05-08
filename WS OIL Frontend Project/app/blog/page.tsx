@@ -9,32 +9,44 @@ export default function BlogPage() {
   const blogPosts = [
     {
       id: 1,
-      title: "Improving Orphan Well Identification",
+      title: "Improving Orphan Well Identification with AI",
       description:
         "How AI is revolutionizing the process of finding and evaluating orphan wells for plugging operations.",
       date: "April 7, 2025",
-      image: "/placeholder.svg?height=200&width=400&text=AI+Well+Detection",
+      image: "https://images.unsplash.com/photo-1581092921461-39b9d08a9b86?q=80&w=2070&auto=format&fit=crop",
+      slug: "improving-orphan-well-identification-with-ai",
+      author: "Dr. James Wilson",
+      authorRole: "Chief Data Scientist",
     },
     {
       id: 2,
       title: "The Economics of Well Plugging",
       description: "Understanding the financial aspects of orphan well plugging and how to maximize profitability.",
       date: "March 22, 2025",
-      image: "/placeholder.svg?height=200&width=400&text=Well+Economics",
+      image: "https://images.unsplash.com/photo-1543286386-713bdd548da4?q=80&w=2070&auto=format&fit=crop",
+      slug: "economics-of-well-plugging",
+      author: "Sarah Johnson",
+      authorRole: "Financial Analyst",
     },
     {
       id: 3,
-      title: "Historical Maps: A Hidden Treasure",
+      title: "Historical Maps: A Hidden Treasure for Well Identification",
       description: "How USGS topographic maps provide valuable data for identifying undocumented orphan wells.",
       date: "March 15, 2025",
-      image: "/placeholder.svg?height=200&width=400&text=Historical+Maps",
+      image: "https://images.unsplash.com/photo-1582281298055-e25b84a30b0b?q=80&w=2070&auto=format&fit=crop",
+      slug: "historical-maps-hidden-treasure",
+      author: "Michael Chen",
+      authorRole: "Geospatial Analyst",
     },
     {
       id: 4,
       title: "Terrain Analysis for Well Access",
       description: "Using satellite imagery and elevation data to determine the accessibility of orphan wells.",
       date: "February 28, 2025",
-      image: "/placeholder.svg?height=200&width=400&text=Terrain+Analysis",
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop",
+      slug: "terrain-analysis-for-well-access",
+      author: "Dr. Emily Rodriguez",
+      authorRole: "Terrain Analysis Specialist",
     },
     {
       id: 5,
@@ -42,14 +54,20 @@ export default function BlogPage() {
       description:
         "Understanding the environmental risks posed by unplugged orphan wells and the benefits of remediation.",
       date: "February 14, 2025",
-      image: "/placeholder.svg?height=200&width=400&text=Environmental+Impact",
+      image: "https://images.unsplash.com/photo-1470115636492-6d2b56f9146d?q=80&w=2070&auto=format&fit=crop",
+      slug: "environmental-impact-of-orphan-wells",
+      author: "Dr. Thomas Green",
+      authorRole: "Environmental Scientist",
     },
     {
       id: 6,
       title: "Federal Funding for Well Plugging",
       description: "Navigating the landscape of federal grants and programs for orphan well plugging projects.",
       date: "January 30, 2025",
-      image: "/placeholder.svg?height=200&width=400&text=Federal+Funding",
+      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2011&auto=format&fit=crop",
+      slug: "federal-funding-for-well-plugging",
+      author: "Lisa Martinez",
+      authorRole: "Government Relations Specialist",
     },
   ]
 
@@ -73,7 +91,7 @@ export default function BlogPage() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts.map((post) => (
-            <Card key={post.id}>
+            <Card key={post.id} className="flex flex-col">
               <CardHeader className="p-0">
                 <Image
                   src={post.image || "/placeholder.svg"}
@@ -83,16 +101,18 @@ export default function BlogPage() {
                   className="w-full h-48 object-cover"
                 />
               </CardHeader>
-              <CardContent className="pt-6">
+              <CardContent className="pt-6 flex-grow">
                 <CardTitle className="mb-2">{post.title}</CardTitle>
                 <CardDescription className="text-gray-600">{post.description}</CardDescription>
               </CardContent>
               <CardFooter>
                 <div className="flex justify-between items-center w-full">
                   <span className="text-sm text-gray-500">{post.date}</span>
-                  <Button variant="ghost" className="text-blue-600 p-0 hover:text-blue-800 hover:bg-transparent">
-                    Read More →
-                  </Button>
+                  <Link href={`/blog/${post.slug}`}>
+                    <Button variant="ghost" className="text-blue-600 p-0 hover:text-blue-800 hover:bg-transparent">
+                      Read More →
+                    </Button>
+                  </Link>
                 </div>
               </CardFooter>
             </Card>

@@ -12,28 +12,32 @@ export default function CaseStudiesPage() {
       title: "Smith Plugging Services: 35% Increase in Profitability",
       description:
         "How a mid-sized plugging company used WellScout to identify low-cost wells and increase their profit margins on state contracts.",
-      image: "/placeholder.svg?height=250&width=600&text=Plugging+Operations",
+      image: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?q=80&w=2070&auto=format&fit=crop",
+      slug: "smith-plugging-services",
     },
     {
       id: 2,
       title: "EcoPlug Inc: Discovering 47 Undocumented Wells",
       description:
         "How our historical map analysis helped a plugging company find dozens of wells that weren't in any state database.",
-      image: "/placeholder.svg?height=250&width=600&text=Map+Analysis",
+      image: "https://images.unsplash.com/photo-1582281298055-e25b84a30b0b?q=80&w=2070&auto=format&fit=crop",
+      slug: "ecoplug-undocumented-wells",
     },
     {
       id: 3,
       title: "Western Well Services: Optimizing Equipment Deployment",
       description:
         "How terrain accessibility ratings helped a company reduce equipment mobilization costs by 28% across multiple projects.",
-      image: "/placeholder.svg?height=250&width=600&text=Equipment+Optimization",
+      image: "https://images.unsplash.com/photo-1579154341098-e4e158cc7f55?q=80&w=2069&auto=format&fit=crop",
+      slug: "western-well-services",
     },
     {
       id: 4,
       title: "GreenEarth Remediation: Scaling Operations by 3x",
       description:
         "How a small plugging company used WellScout to rapidly expand their operations across multiple states.",
-      image: "/placeholder.svg?height=250&width=600&text=Business+Growth",
+      image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2070&auto=format&fit=crop",
+      slug: "greenearth-remediation",
     },
   ]
 
@@ -72,7 +76,9 @@ export default function CaseStudiesPage() {
                 <CardDescription className="text-gray-600">{study.description}</CardDescription>
               </CardContent>
               <CardFooter>
-                <Button className="w-full bg-blue-600 hover:bg-blue-700">Read Case Study</Button>
+                <Link href={`/case-studies/${study.slug}`} className="w-full">
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700">Read Case Study</Button>
+                </Link>
               </CardFooter>
             </Card>
           ))}

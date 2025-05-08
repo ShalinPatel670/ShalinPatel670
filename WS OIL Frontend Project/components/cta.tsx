@@ -1,15 +1,42 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+"use client"
+
+import { useEffect, useRef } from "react"
 
 export default function CTA() {
+  const jotformContainerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    // Clean up any existing scripts first
+    if (jotformContainerRef.current) {
+      const existingScripts = jotformContainerRef.current.querySelectorAll("script")
+      existingScripts.forEach((script) => script.remove())
+    }
+
+    // Create and append the script
+    const script = document.createElement("script")
+    script.src = "https://form.jotform.com/jsform/251266656681162"
+    script.type = "text/javascript"
+    script.async = true
+
+    if (jotformContainerRef.current) {
+      jotformContainerRef.current.appendChild(script)
+    }
+
+    // Cleanup function
+    return () => {
+      if (jotformContainerRef.current && jotformContainerRef.current.contains(script)) {
+        jotformContainerRef.current.removeChild(script)
+      }
+    }
+  }, [])
+
   return (
     <section id="contact" className="py-12">
       <div className="grid md:grid-cols-2 gap-12">
         <div>
           <h2 className="text-3xl font-bold mb-4">Ready to Find Profitable Wells?</h2>
           <p className="text-lg text-gray-600 mb-6">
-            Contact us today to learn how WellScout can transform your plugging operations with AI-powered insights.
+            Contact us today to learn how WS OIL can transform your plugging operations with AI-powered insights.
           </p>
           <div className="space-y-6">
             <div className="flex items-start">
@@ -25,7 +52,7 @@ export default function CTA() {
               </div>
               <div>
                 <h3 className="font-semibold">Phone</h3>
-                <p className="text-gray-600">(555) 123-4567</p>
+                <p className="text-gray-600">(614) 546-9965</p>
               </div>
             </div>
             <div className="flex items-start">
@@ -71,41 +98,9 @@ export default function CTA() {
 
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
-          <form className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="first-name" className="block text-sm font-medium text-gray-700 mb-1">
-                  First Name
-                </label>
-                <Input id="first-name" placeholder="John" />
-              </div>
-              <div>
-                <label htmlFor="last-name" className="block text-sm font-medium text-gray-700 mb-1">
-                  Last Name
-                </label>
-                <Input id="last-name" placeholder="Smith" />
-              </div>
-            </div>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Email
-              </label>
-              <Input id="email" type="email" placeholder="john@example.com" />
-            </div>
-            <div>
-              <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
-                Company
-              </label>
-              <Input id="company" placeholder="Your Company" />
-            </div>
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                Message
-              </label>
-              <Textarea id="message" placeholder="How can we help you?" rows={4} />
-            </div>
-            <Button className="w-full bg-blue-600 hover:bg-blue-700">Send Message</Button>
-          </form>
+          <div ref={jotformContainerRef} className="min-h-[400px]">
+            {/* Jotform will be loaded here */}
+          </div>
         </div>
       </div>
     </section>

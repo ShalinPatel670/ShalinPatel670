@@ -4,6 +4,94 @@ import Link from "next/link"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function CareersPage() {
+  const jobListings = [
+    {
+      id: 1,
+      title: "Senior Machine Learning Engineer",
+      department: "Engineering",
+      location: "Columbus, OH (Hybrid)",
+      slug: "senior-ml-engineer",
+      description:
+        "Join our AI team to develop and improve our machine learning models for well identification and cost prediction.",
+      responsibilities: [
+        "Design, develop, and implement machine learning models for geospatial data analysis",
+        "Optimize existing models for improved accuracy and performance",
+        "Collaborate with data scientists and engineers to integrate models into production systems",
+        "Stay current with the latest advancements in machine learning and AI",
+      ],
+      requirements: [
+        "5+ years of experience in machine learning engineering",
+        "Strong Python skills and experience with ML frameworks (TensorFlow, PyTorch)",
+        "Experience with computer vision and geospatial data analysis",
+        "MS or PhD in Computer Science, Machine Learning, or related field",
+        "Experience with cloud-based ML infrastructure (AWS, GCP, or Azure)",
+      ],
+    },
+    {
+      id: 2,
+      title: "Geospatial Data Scientist",
+      department: "Data Science",
+      location: "Remote",
+      slug: "geospatial-data-scientist",
+      description: "Help us extract valuable insights from historical maps, satellite imagery, and terrain data.",
+      responsibilities: [
+        "Analyze geospatial data to identify patterns and extract features relevant to well identification",
+        "Develop and implement algorithms for processing historical maps and satellite imagery",
+        "Create and maintain data pipelines for geospatial data processing",
+        "Collaborate with ML engineers to develop training datasets for machine learning models",
+      ],
+      requirements: [
+        "3+ years of experience in geospatial data analysis",
+        "Strong Python skills and experience with geospatial libraries (GDAL, Rasterio, GeoPandas)",
+        "Experience with remote sensing data and image processing",
+        "MS or PhD in GIS, Remote Sensing, Geography, or related field",
+        "Knowledge of oil and gas industry is a plus",
+      ],
+    },
+    {
+      id: 3,
+      title: "Frontend Developer",
+      department: "Engineering",
+      location: "Columbus, OH (Hybrid)",
+      slug: "frontend-developer",
+      description: "Build intuitive and powerful interfaces for our well analysis platform.",
+      responsibilities: [
+        "Develop and maintain the user interface for our web-based platform",
+        "Implement interactive maps and data visualization components",
+        "Collaborate with UX designers and backend developers",
+        "Optimize application performance and responsiveness",
+      ],
+      requirements: [
+        "3+ years of experience in frontend development",
+        "Strong proficiency in React, TypeScript, and modern CSS",
+        "Experience with mapping libraries (Mapbox, Leaflet, or similar)",
+        "Knowledge of data visualization libraries (D3.js, Chart.js, or similar)",
+        "BS in Computer Science or equivalent experience",
+      ],
+    },
+    {
+      id: 4,
+      title: "Account Executive",
+      department: "Sales",
+      location: "Remote",
+      slug: "account-executive",
+      description: "Drive growth by building relationships with plugging companies and state agencies.",
+      responsibilities: [
+        "Develop and maintain relationships with key clients in the well plugging industry",
+        "Conduct product demonstrations and presentations",
+        "Collaborate with the product team to address client needs",
+        "Meet and exceed sales targets",
+      ],
+      requirements: [
+        "5+ years of sales experience, preferably in SaaS or the energy sector",
+        "Strong understanding of the oil and gas industry",
+        "Excellent communication and presentation skills",
+        "Track record of meeting or exceeding sales targets",
+        "Bachelor's degree in Business, Marketing, or related field",
+      ],
+    },
+  ]
+
   return (
     <main className="min-h-screen pt-24 pb-12">
       <div className="container max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -83,17 +171,8 @@ export default function CareersPage() {
         <div className="mb-16">
           <h2 className="text-3xl font-bold mb-8">Open Positions</h2>
           <div className="space-y-6">
-            {[
-              {
-                title: "Senior Machine Learning Engineer",
-                department: "Engineering",
-                location: "Columbus, OH (Hybrid)",
-              },
-              { title: "Geospatial Data Scientist", department: "Data Science", location: "Remote" },
-              { title: "Frontend Developer", department: "Engineering", location: "Columbus, OH (Hybrid)" },
-              { title: "Account Executive", department: "Sales", location: "Remote" },
-            ].map((job, index) => (
-              <Card key={index}>
+            {jobListings.map((job) => (
+              <Card key={job.id}>
                 <CardHeader>
                   <CardTitle>{job.title}</CardTitle>
                   <CardDescription>
@@ -101,13 +180,30 @@ export default function CareersPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600">
-                    We're looking for a talented {job.title.toLowerCase()} to join our growing team and help us build
-                    the future of orphan well identification and analysis.
-                  </p>
+                  <p className="text-gray-600 mb-4">{job.description}</p>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="font-semibold mb-2">Responsibilities:</h4>
+                      <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                        {job.responsibilities.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold mb-2">Requirements:</h4>
+                      <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                        {job.requirements.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
                 </CardContent>
                 <CardFooter>
-                  <Button className="bg-blue-600 hover:bg-blue-700">View Job Details</Button>
+                  <Link href={`/careers/${job.slug}`}>
+                    <Button className="bg-blue-600 hover:bg-blue-700">View Job Details</Button>
+                  </Link>
                 </CardFooter>
               </Card>
             ))}
@@ -120,7 +216,9 @@ export default function CareersPage() {
             We're always interested in connecting with talented individuals. Send us your resume and let us know how you
             can contribute to our mission.
           </p>
-          <Button className="bg-blue-600 hover:bg-blue-700">Submit Your Resume</Button>
+          <a href="mailto:info@wellscout.com">
+            <Button className="bg-blue-600 hover:bg-blue-700">Submit Your Resume</Button>
+          </a>
         </div>
       </div>
     </main>

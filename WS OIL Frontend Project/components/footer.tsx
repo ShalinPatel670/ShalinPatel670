@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4">WellScout</h3>
             <p className="text-gray-400 mb-4">
@@ -14,31 +14,6 @@ export default function Footer() {
               <p>(614)-546-9965</p>
               <p>info@wellscout.com</p>
             </div>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Platform</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/how-it-works" className="text-gray-400 hover:text-white transition-colors">
-                  How It Works
-                </Link>
-              </li>
-              <li>
-                <Link href="/technology" className="text-gray-400 hover:text-white transition-colors">
-                  Technology
-                </Link>
-              </li>
-              <li>
-                <Link href="/platform" className="text-gray-400 hover:text-white transition-colors">
-                  Features
-                </Link>
-              </li>
-              <li>
-                <Link href="/pricing" className="text-gray-400 hover:text-white transition-colors">
-                  Pricing
-                </Link>
-              </li>
-            </ul>
           </div>
           <div>
             <h3 className="text-lg font-semibold mb-4">Resources</h3>

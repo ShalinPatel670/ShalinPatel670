@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
+import Link from "next/link"
 
 // --- Define Image URLs and Particle Colors ---
 const WS_LOGO_URL =
@@ -368,9 +369,11 @@ export default function Hero() {
           Our AI approach identifies orphan wells with the lowest plugging costs.
         </p>
         <div className="flex justify-center">
-          <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
-            Request Demo <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
+          <Link href="/request-demo">
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+              Request Demo <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

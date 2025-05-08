@@ -26,7 +26,7 @@ export default function AboutPage() {
           <div>
             <h2 className="text-3xl font-bold mb-4">Our Story</h2>
             <p className="text-gray-600 mb-4">
-              WellScout was founded in 2023 by a team of geospatial data scientists and oil industry veterans who
+              WellScout was founded in 2025 by a team of machine learning engineers, geospatial data scientists and oil industry experts who
               recognized a critical gap in the orphan well plugging market: the lack of data-driven decision making.
             </p>
             <p className="text-gray-600 mb-4">
@@ -41,7 +41,7 @@ export default function AboutPage() {
           </div>
           <div className="bg-gray-100 p-4 rounded-lg">
             <Image
-              src="/placeholder.svg?height=400&width=500&text=WellScout+Team"
+              src="https://images.unsplash.com/photo-1624771002998-4aadfd43e7c4?q=80&w=2564&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="WellScout team"
               width={500}
               height={400}
@@ -103,26 +103,16 @@ export default function AboutPage() {
 
         <div className="mb-16">
           <h2 className="text-3xl font-bold mb-8 text-center">Leadership Team</h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-1 gap-8">
             {[
               {
-                name: "Sarah Johnson",
-                title: "CEO & Co-Founder",
-                bio: "Former geospatial data scientist with 15 years of experience in the oil and gas industry.",
-                image: "/placeholder.svg?height=150&width=150&text=SJ",
+                name: "Shalin Patel",
+                title: "CEO & Founder",
+                bio: "AI specialist and machine learning researcher at The Ohio State University.",
+                image: "https://media.licdn.com/dms/image/v2/D5603AQHzRQmhqajUuQ/profile-displayphoto-shrink_800_800/B56ZWHzJqrGUAc-/0/1741740088940?e=1751500800&v=beta&t=0cN-CPGmxE_A31ucglPzTXRPaXbky2owYq-_SYYpHoA",
               },
-              {
-                name: "Michael Rodriguez",
-                title: "CTO & Co-Founder",
-                bio: "AI specialist who developed the core algorithms behind WellScout's cost prediction models.",
-                image: "/placeholder.svg?height=150&width=150&text=MR",
-              },
-              {
-                name: "David Chen",
-                title: "COO",
-                bio: "Operations expert with extensive experience managing plugging projects across multiple states.",
-                image: "/placeholder.svg?height=150&width=150&text=DC",
-              },
+              
+              
             ].map((person, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-sm text-center">
                 <Image

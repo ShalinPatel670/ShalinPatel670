@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 
 export default function Testimonials() {
@@ -43,7 +44,7 @@ export default function Testimonials() {
               <div className="flex items-center mb-4">
                 <div className="mr-4">
                   <Image
-                    src={`/placeholder.svg?height=60&width=60&text=${testimonial.name.split(" ")[0][0]}${testimonial.name.split(" ")[1][0]}`}
+                    src={`https://cdn-icons-png.flaticon.com/512/22/22495.png?height=60&width=60&text=${testimonial.name.split(" ")[0][0]}${testimonial.name.split(" ")[1][0]}`}
                     alt={testimonial.name}
                     width={60}
                     height={60}
@@ -69,9 +70,9 @@ export default function Testimonials() {
       </div>
 
       <div className="mt-12 text-center">
-        <a href="#case-studies" className="text-blue-600 hover:text-blue-800 font-medium">
+        <Link href="/case-studies" className="text-blue-600 hover:text-blue-800 font-medium">
           Read our detailed case studies →
-        </a>
+        </Link>
       </div>
     </section>
   )

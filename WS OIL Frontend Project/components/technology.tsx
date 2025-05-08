@@ -133,7 +133,7 @@ export default function Technology() {
 
         <div className="bg-gray-100 p-6 rounded-lg">
           <Image
-            src="/placeholder.svg?height=400&width=500&text=AI+Analyzing+Topographic+Maps"
+            src="https://newscenter.lbl.gov/wp-content/uploads/2024/11/CA_Belridge_288303_1953_24000.jpg"
             alt="AI analyzing topographic maps"
             width={500}
             height={400}

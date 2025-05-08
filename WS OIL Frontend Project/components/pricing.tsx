@@ -1,5 +1,6 @@
 import { Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function Pricing() {
   return (
@@ -41,7 +42,9 @@ export default function Pricing() {
               <span>Email support</span>
             </li>
           </ul>
-          <Button className="w-full">Get Started</Button>
+          <Link href="/request-demo">
+            <Button className="w-full">Get Started</Button>
+          </Link>
         </div>
 
         <div className="bg-blue-50 p-8 rounded-lg shadow-md border border-blue-200 relative">
@@ -80,7 +83,9 @@ export default function Pricing() {
               <span>API access</span>
             </li>
           </ul>
-          <Button className="w-full bg-blue-600 hover:bg-blue-700">Get Started</Button>
+          <Link href="/request-demo">
+            <Button className="w-full bg-blue-600 hover:bg-blue-700">Get Started</Button>
+          </Link>
         </div>
 
         <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200">
@@ -115,9 +120,11 @@ export default function Pricing() {
               <span>Custom integrations</span>
             </li>
           </ul>
-          <Button className="w-full" variant="outline">
-            Contact Sales
-          </Button>
+          <Link href="/request-demo">
+            <Button className="w-full" variant="outline">
+              Contact Sales
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -125,7 +132,9 @@ export default function Pricing() {
         <p className="text-gray-600 mb-4">
           Not sure which plan is right for you? Contact us for a personalized demo and consultation.
         </p>
-        <Button className="bg-blue-600 hover:bg-blue-700">Schedule a Consultation</Button>
+        <Link href="/request-demo">
+          <Button className="bg-blue-600 hover:bg-blue-700">Schedule a Consultation</Button>
+        </Link>
       </div>
     </section>
   )
