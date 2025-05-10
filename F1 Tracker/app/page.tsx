@@ -4,10 +4,11 @@ import { useState, useEffect } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Trophy, Flag, Users, ChevronRight, Save, RotateCcw } from "lucide-react"
+import { Trophy, Flag, Users, ChevronRight, Save, RotateCcw, Newspaper } from "lucide-react"
 import DriversStandings from "@/components/drivers-standings"
 import ConstructorsStandings from "@/components/constructors-standings"
 import RaceInput from "@/components/race-input"
+import Newsroom from "@/components/newsroom"
 import { initialDrivers, initialTeams, races } from "@/lib/f1-data"
 import type { Driver, Team, RaceResult } from "@/lib/types"
 
@@ -64,6 +65,7 @@ export default function F1Tracker() {
       setRaceResults([])
       setCurrentRaceIndex(0)
       localStorage.removeItem("f1TrackerData")
+      localStorage.removeItem("f1TrackerNewsroom")
     }
   }
 
@@ -201,6 +203,10 @@ export default function F1Tracker() {
             <Users className="h-4 w-4 mr-2" />
             Constructors Championship
           </TabsTrigger>
+          <TabsTrigger value="newsroom" className="data-[state=active]:bg-[#e10600]">
+            <Newspaper className="h-4 w-4 mr-2" />
+            Newsroom
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="race">
@@ -250,6 +256,10 @@ export default function F1Tracker() {
               </Button>
             </div>
           )}
+        </TabsContent>
+
+        <TabsContent value="newsroom">
+          <Newsroom drivers={drivers} teams={teams} currentRaceIndex={currentRaceIndex} raceResults={raceResults} />
         </TabsContent>
       </Tabs>
     </div>
