@@ -4,12 +4,13 @@ import type { Driver, Team } from "./types"
 export const races = [
   "Bahrain Grand Prix",
   "Emilia Romagna Grand Prix",
+  "Chinese Grand Prix",
   "Portuguese Grand Prix",
   "Spanish Grand Prix",
+  "Canadian Grand Prix",
   "Monaco Grand Prix",
   "Azerbaijan Grand Prix",
   "French Grand Prix",
-  "Styrian Grand Prix",
   "Austrian Grand Prix",
   "British Grand Prix",
   "Hungarian Grand Prix",
@@ -17,11 +18,12 @@ export const races = [
   "Dutch Grand Prix",
   "Italian Grand Prix",
   "Russian Grand Prix",
-  "Turkish Grand Prix",
+  "Singapore Grand Prix",
+  "Japanese Grand Prix",
   "United States Grand Prix",
   "Mexico City Grand Prix",
   "São Paulo Grand Prix",
-  "Qatar Grand Prix",
+  "Australian Grand Prix",
   "Saudi Arabian Grand Prix",
   "Abu Dhabi Grand Prix",
 ]
@@ -63,6 +65,6 @@ export const initialDrivers: Driver[] = [
   { id: "gio", name: "Antonio Giovinazzi", code: "GIO", team: "alfa", teamName: "Alfa Romeo Racing", points: 0 },
   { id: "msc", name: "Mick Schumacher", code: "MSC", team: "haas", teamName: "Haas F1 Team", points: 0 },
   { id: "maz", name: "Nikita Mazepin", code: "MAZ", team: "haas", teamName: "Haas F1 Team", points: 0 },
-  { id: "spa", name: "Shalin Patel", code: "SPA", team: "americar", teamName: "Americar", points: 0 }, // New driver
-  { id: "ppa", name: "Praneel Patel", code: "PPA", team: "americar", teamName: "Americar", points: 0 }, // New driver
+  { id: "spa", name: "Aaron Barnes", code: "BAR", team: "americar", teamName: "Americar", points: 0 }, // New driver
+  { id: "ppa", name: "Evan Duval", code: "DUV", team: "americar", teamName: "Americar", points: 0 }, // New driver
 ]

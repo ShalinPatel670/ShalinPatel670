@@ -23,13 +23,44 @@ export const tweetPool = [
     id: "preseason-4",
     author: "Karun Chandhok",
     handle: "karunchandhok",
-    content: `Looking at the long-run data from testing, {topDriver} seems to have the best race pace. But {lowestDriver} has shown impressive consistency in the {lowestTeam} car. Bahrain will tell us more.`,
+    content: `Looking at the long-run data from testing, {topDriver} seems to have the best race pace. But it's not all about the blue chips: {lowestDriver} has shown impressive consistency in the {lowestTeam} car. Bahrain will tell us more.`,
   },
   {
     id: "preseason-5",
     author: "Will Buxton",
     handle: "wbuxtonofficial",
-    content: `The paddock is buzzing with anticipation ahead of Bahrain. {topTeam} looks formidable, but {secondTeam} has been sandbagging in testing. This could be one of the closest seasons in years!`,
+    content: `The paddock is buzzing with anticipation ahead of Bahrain. {topTeam} looks formidable, but other teams has been sandbagging in testing. This could be one of the closest seasons in years!`,
+  },
+  // New pre-season tweets about midfield teams
+  {
+    id: "preseason-6",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `The midfield battle looks incredibly tight this year. {thirdTeam} could be the dark horse - their car concept is quite innovative and they've made some smart technical hires over the winter.`,
+  },
+  {
+    id: "preseason-7",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: The fight for third in the constructors' could be fascinating this year. {thirdTeam} has shown impressive pace in testing, but {fourthTeam} and {fifthTeam} aren't far behind. This midfield battle will be one to watch!`,
+  },
+  {
+    id: "preseason-8",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `Looking at the midfield teams' testing data, {thirdTeam} appears to have made the biggest step forward. Their car looks particularly strong in the medium-speed corners. Could they challenge the top two this season?`,
+  },
+  {
+    id: "preseason-9",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `The technical team at {fourthTeam} has been completely restructured over the winter. Early signs from testing suggest it's paying dividends - they could be regular podium contenders this year.`,
+  },
+  {
+    id: "preseason-10",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `Don't sleep on {fifthTeam} this season! They've been quietly confident during testing, and their new technical director has brought some interesting concepts from their previous team. The midfield is going to be ultra-competitive!`,
   },
 
   // Mid-season break tweets
@@ -37,13 +68,13 @@ export const tweetPool = [
     id: "midseason-1",
     author: "Martin Brundle",
     handle: "MBrundleF1",
-    content: `As we head into the summer break, {topDriver} leads the championship by {Math.abs(sortedDrivers[0].points - sortedDrivers[1].points)} points. But with {totalRaces - currentRaceIndex} races to go, anything can happen!`,
+    content: `As we head into the summer break, {topDriver} leads the championship. But with half the season to go, anything can happen!`,
   },
   {
     id: "midseason-2",
     author: "David Croft",
     handle: "CroftyF1",
-    content: `Mid-season report: {topTeam} leads the constructors' by {Math.abs(sortedTeams[0].points - sortedTeams[1].points)} points, but {secondTeam} has been closing the gap. The development race during the break will be crucial!`,
+    content: `Mid-season report: {topTeam} leads the constructors, but {secondTeam} has been closing the gap. The development race during the break will be crucial!`,
   },
   {
     id: "midseason-3",
@@ -63,13 +94,44 @@ export const tweetPool = [
     handle: "wbuxtonofficial",
     content: `The summer break is here! {topTeam} leads both championships, but {secondTeam} is closing in. The development race during the break could decide this championship.`,
   },
+  // New mid-season tweets about midfield teams
+  {
+    id: "midseason-6",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `The battle for third in the constructors' has been fascinating. {thirdTeam} currently holds the position, but {fourthTeam} has been fighting hard. This battle will go down to the wire.`,
+  },
+  {
+    id: "midseason-7",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: {thirdTeam} has been the most consistent midfield performer, but {fourthTeam} has had higher peaks. Their development paths are quite different - {thirdTeam} focusing on reliability while {fourthTeam} chases raw pace.`,
+  },
+  {
+    id: "midseason-8",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `The midfield battle has been incredibly tight. Not a huge gap between P3 and P6 in the constructors. Every point will be crucial in the second half of the season.`,
+  },
+  {
+    id: "midseason-9",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `{fifthTeam} has been the surprise package in the midfield. Despite their limited budget, they've consistently outperformed larger teams. Their technical team deserves enormous credit.`,
+  },
+  {
+    id: "midseason-10",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `The driver battle at {thirdTeam} has been fascinating. {thirdDriver} and their teammate have been pushing each other to new heights, which has helped them secure P3 in the standings at the break.`,
+  },
 
   // Pre-Abu Dhabi tweets
   {
     id: "preabudhabi-1",
     author: "Martin Brundle",
     handle: "MBrundleF1",
-    content: `The season finale in Abu Dhabi is upon us! {topDriver} leads by {Math.abs(sortedDrivers[0].points - sortedDrivers[1].points)} points. One last race to decide it all - this is what F1 is all about!`,
+    content: `The season finale in Abu Dhabi is upon us! One last race to decide it all - this is what F1 is all about!`,
   },
   {
     id: "preabudhabi-2",
@@ -87,13 +149,44 @@ export const tweetPool = [
     id: "preabudhabi-4",
     author: "Karun Chandhok",
     handle: "karunchandhok",
-    content: `The championship permutations are fascinating. {topDriver} needs to finish P{Math.ceil((sortedDrivers[1].points - sortedDrivers[0].points + 25) / 25)} or higher to secure the title. Abu Dhabi has delivered drama before!`,
+    content: `The championship permutations are fascinating. There's excitiment in store for the end of the season. As we all know, Abu Dhabi has delivered drama before!`,
   },
   {
     id: "preabudhabi-5",
     author: "Will Buxton",
     handle: "wbuxtonofficial",
     content: `The paddock is electric ahead of the season finale. {lowestDriver} has a point to prove, while {topDriver} looks to cap off a remarkable season. Abu Dhabi, here we come!`,
+  },
+  // New pre-Abu Dhabi tweets about midfield teams
+  {
+    id: "preabudhabi-6",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `The battle for third in the constructors' will go down to the wire in Abu Dhabi! Not an insurmountable divide going into the final race, with millions of dollars in prize money at stake.`,
+  },
+  {
+    id: "preabudhabi-7",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: {thirdTeam} and {fourthTeam} have both brought their final upgrades to Abu Dhabi. The fight for P3 in the constructors' is worth approximately $10-15 million in prize money - a significant sum for these teams.`,
+  },
+  {
+    id: "preabudhabi-8",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `The midfield battle has been one of the highlights of the season. {fifthTeam} could still snatch P4 if results go their way in Abu Dhabi.`,
+  },
+  {
+    id: "preabudhabi-9",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `{thirdDriver} has been the standout midfield performer this season. Their consistency has been crucial in {thirdTeam}'s fight for P3 in the constructors'. One final push needed in Abu Dhabi.`,
+  },
+  {
+    id: "preabudhabi-10",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `Don't forget the intense battle for P6 between {sixthTeam} and {seventhTeam}! Benefits for next season are on the line. Every position in Abu Dhabi will be crucial for their final championship standing.`,
   },
 
   // Post-season tweets
@@ -127,6 +220,37 @@ export const tweetPool = [
     handle: "wbuxtonofficial",
     content: `The 2024 season will be remembered for {championDriver}'s dominance and {lowestTeam}'s remarkable progress. The 2025 regulations are already creating excitement in the paddock!`,
   },
+  // New post-season tweets about midfield teams
+  {
+    id: "postseason-6",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `Congratulations to {thirdTeam} for securing P3 in the constructors' championship! They've been the best of the rest all season, and thoroughly deserve their position as the leading midfield team.`,
+  },
+  {
+    id: "postseason-7",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: {thirdTeam}'s journey to P3 in the constructors' has been fascinating. Their technical restructure two years ago is now bearing fruit. The additional prize money will further strengthen their position for 2025.`,
+  },
+  {
+    id: "postseason-8",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `The midfield battle was one of the highlights of 2024. {fourthTeam} will be disappointed to miss out on P3, but they've shown great progress. Their car concept has clear potential for further development.`,
+  },
+  {
+    id: "postseason-9",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `{fifthTeam} has been the efficiency champions of 2024. With one of the smallest budgets on the grid, they've consistently punched above their weight to secure P5 in the constructors'.`,
+  },
+  {
+    id: "postseason-10",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `The driver of the day in Abu Dhabi, {thirdDriver}, caps off a stellar season. Their performances have been crucial in {thirdTeam}'s successful campaign. A future champion in the making?`,
+  },
 
   // More tweets about lower-ranked teams
   {
@@ -158,6 +282,130 @@ export const tweetPool = [
     author: "Will Buxton",
     handle: "wbuxtonofficial",
     content: `{lowestTeam} has a clear vision for their future in F1. Their technical structure is solid, and they're making steady progress. Don't write them off for next season!`,
+  },
+
+  // New tweets about midfield teams and battles
+  {
+    id: "midfield-1",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `The midfield battle between {thirdTeam}, {fourthTeam}, and {fifthTeam} is providing some of the best racing this season. Their cars are closely matched, which means driver skill is making the difference.`,
+  },
+  {
+    id: "midfield-2",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `{thirdTeam} has been the surprise package this season! Currently P3 in the constructors' and consistently challenging the top teams. Their technical department deserves enormous credit.`,
+  },
+  {
+    id: "midfield-3",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: {fourthTeam}'s upgrade package has delivered exactly what they promised. Their car is now much stronger in high-speed corners, which should help them at {currentRace} this weekend.`,
+  },
+  {
+    id: "midfield-4",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `Looking at the data, {fifthTeam} has the strongest straight-line speed in the midfield. That's helping them defend positions, but they're losing time in the technical sections compared to {thirdTeam}.`,
+  },
+  {
+    id: "midfield-5",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `The atmosphere at {thirdTeam} is incredibly positive right now. They're punching above their weight, and there's a real belief they can maintain P3 in the constructors' until the end of the season.`,
+  },
+  {
+    id: "midfield-6",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `{thirdDriver} has been the standout midfield performer this season. Consistently extracting the maximum from the {thirdTeam} car and regularly challenging the top teams. Future world champion material.`,
+  },
+  {
+    id: "midfield-7",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `The battle for P5 between {fifthTeam} and {sixthTeam} is heating up! Every race finish counts in this tight midfield contest.`,
+  },
+  {
+    id: "midfield-8",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: {sixthTeam} has brought a completely new floor design to {currentRace}. They're targeting {fifthTeam}'s P5 position, and early data from practice looks promising.`,
+  },
+  {
+    id: "midfield-9",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `{seventhTeam} has been inconsistent this season, but when they get the setup right, they can challenge for serious points. Their car seems particularly sensitive to track temperature.`,
+  },
+  {
+    id: "midfield-10",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `The technical battle in the midfield is fascinating. {thirdTeam}, {fourthTeam}, and {fifthTeam} have completely different car concepts, yet their performance is remarkably similar. F1's technical diversity at its best.`,
+  },
+
+  // Tweets specifically about the 3rd place team
+  {
+    id: "thirdteam-1",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `{thirdTeam} has made remarkable progress this season. Their car development rate has been impressive, and they're now regularly the third-fastest team. Could they challenge the top two next year?`,
+  },
+  {
+    id: "thirdteam-2",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `{thirdDriver} has been extracting everything from that {thirdTeam} car. Their qualifying performances have been particularly impressive - regularly making it into Q3 and occasionally troubling the top teams.`,
+  },
+  {
+    id: "thirdteam-3",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: {thirdTeam}'s technical director explained their development philosophy to me today. They're focusing on incremental gains rather than big updates, and it's clearly working.`,
+  },
+  {
+    id: "thirdteam-4",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `The data shows {thirdTeam} is particularly strong in medium-speed corners. That's helping them at tracks like {currentRace}, where they could be in the mix for a podium if the top teams slip up.`,
+  },
+  {
+    id: "thirdteam-5",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `The atmosphere at {thirdTeam} is electric right now. They've consolidated their position as the third-best team, and there's a real belief they can close the gap to {secondTeam} before the end of the season.`,
+  },
+  {
+    id: "thirdteam-6",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `{thirdTeam}'s pit crew has been exceptional this season. Consistently executing sub-2.5 second stops, which has helped them gain crucial positions in the tight midfield battle.`,
+  },
+  {
+    id: "thirdteam-7",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `{thirdTeam} now has {sortedTeams[2].points} points in the constructors' championship. That's already more than their entire haul from last season, with {totalRaces - currentRaceIndex} races still to go!`,
+  },
+  {
+    id: "thirdteam-8",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: {thirdTeam}'s factory has been working 24/7 to bring updates to every race. Their commitment to development is paying off with their strong P3 position in the championship.`,
+  },
+  {
+    id: "thirdteam-9",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `{thirdTeam}'s race strategists have been making all the right calls this season. Their decision-making under pressure has been excellent, particularly in the mixed-condition races.`,
+  },
+  {
+    id: "thirdteam-10",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `The partnership between {thirdDriver} and his race engineer has been one of the success stories of the season. They've elevated each other to new heights, and the results speak for themselves.`,
   },
 
   // Martin Brundle tweets
@@ -251,6 +499,25 @@ export const tweetPool = [
     handle: "MBrundleF1",
     content: `{topDriver} seems to have found another gear in recent races. Their confidence in the car is visibly growing.`,
   },
+  // New Martin Brundle tweets about midfield teams
+  {
+    id: "brundle-16",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `The midfield battle between {thirdTeam} and {fourthTeam} is providing some of the best racing this season. Not many points between them in the fight for P3.`,
+  },
+  {
+    id: "brundle-17",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `{thirdDriver} has been exceptional in that {thirdTeam} car. They're maximizing every opportunity and regularly scoring big points. A future star in the making.`,
+  },
+  {
+    id: "brundle-18",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `{fifthTeam} has the most efficient operation in F1. With one of the smallest budgets, they're consistently outperforming teams with far greater resources. Impressive management.`,
+  },
 
   // David Croft tweets
   {
@@ -281,7 +548,7 @@ export const tweetPool = [
     id: "croft-5",
     author: "David Croft",
     handle: "CroftyF1",
-    content: `What a battle we're seeing between {topDriver} and {secondDriver} this season! Just {Math.abs(sortedDrivers[0].points - sortedDrivers[1].points)} points between them in the championship.`,
+    content: `What a battle we're seeing between {topDriver} and {secondDriver} this season! I do wonder how we'll look back at this competition a decade or two from now. That's all the philisophical talk for now though -- interview with Christian Horner today :)`,
   },
   {
     id: "croft-6",
@@ -342,6 +609,25 @@ export const tweetPool = [
     author: "David Croft",
     handle: "CroftyF1",
     content: `{nextRace} is just around the corner! The teams will have a quick turnaround after this weekend's race at {currentRace}.`,
+  },
+  // New David Croft tweets about midfield teams
+  {
+    id: "croft-16",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `What a result for {thirdTeam}! Another strong points haul strengthens their grip on P3 in the constructors'. {fourthTeam} is going to have long discussions tonight.`,
+  },
+  {
+    id: "croft-17",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `WHAT A MOVE by {thirdDriver}! Brilliant overtake around the outside of Turn 4. That {thirdTeam} car is working beautifully through the medium-speed corners.`,
+  },
+  {
+    id: "croft-18",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `The midfield battle is providing some of the best racing this season! {fourthTeam}, {fifthTeam}, and {sixthTeam} are separated by just tenths in qualifying and racing wheel-to-wheel every weekend.`,
   },
 
   // Ted Kravitz tweets
@@ -435,6 +721,25 @@ export const tweetPool = [
     handle: "TedKravitz",
     content: `{americarTeam} have a new technical director starting after {currentRace}. Big signing for them - previously worked at {topTeam}.`,
   },
+  // New Ted Kravitz tweets about midfield teams
+  {
+    id: "kravitz-16",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: {thirdTeam} have brought a significant upgrade package to {currentRace}. New floor, revised sidepods, and updated brake ducts. They're serious about consolidating that P3 position.`,
+  },
+  {
+    id: "kravitz-17",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Just spotted the {fourthTeam} technical director deep in conversation with their chief aerodynamicist. They're planning a major update for the next race to challenge {thirdTeam} for P3.`,
+  },
+  {
+    id: "kravitz-18",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `The {fifthTeam} garage has a completely new front wing design they're testing today. It's a radical concept - much more aggressive than anything we've seen from them before.`,
+  },
 
   // Karun Chandhok tweets
   {
@@ -526,6 +831,25 @@ export const tweetPool = [
     author: "Karun Chandhok",
     handle: "karunchandhok",
     content: `The telemetry shows {americarDriver1} is braking later and harder than {americarDriver2} at Turn 1. Different driving styles within the same team.`,
+  },
+  // New Karun Chandhok tweets about midfield teams
+  {
+    id: "chandhok-16",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `Analyzing the telemetry data from {thirdTeam} and {fourthTeam}, they have completely different strengths. {thirdTeam} excels in medium-speed corners, while {fourthTeam} has better straight-line speed.`,
+  },
+  {
+    id: "chandhok-17",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `The long-run pace from {thirdDriver} in FP2 was impressive. They were consistently matching {secondTeam}'s times in the final sector. {thirdTeam} has made real progress with their car balance.`,
+  },
+  {
+    id: "chandhok-18",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `Looking at the midfield battle, {fifthTeam} has the most efficient aero package. They're generating competitive downforce levels despite having one of the smallest development budgets.`,
   },
 
   // Will Buxton tweets
@@ -619,6 +943,25 @@ export const tweetPool = [
     handle: "wbuxtonofficial",
     content: `{americarTeam} has a new sponsor on the car this weekend. Good to see them attracting more commercial partners in their second season.`,
   },
+  // New Will Buxton tweets about midfield teams
+  {
+    id: "buxton-16",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `Just had a fascinating chat with {thirdTeam}'s team principal. They're not just focused on securing P3 this year - they have a three-year plan to challenge for championships. Ambitious but refreshing.`,
+  },
+  {
+    id: "buxton-17",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `The atmosphere at {fourthTeam} is incredibly positive despite losing ground to {thirdTeam}. Their technical director assured me they have major upgrades coming for the next three races.`,
+  },
+  {
+    id: "buxton-18",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `{fifthTeam} continues to be the most efficient team on the grid. Their technical director explained how they're maximizing every dollar of their budget. A masterclass in resource management.`,
+  },
 
   // Jenson Button tweets
   {
@@ -710,6 +1053,25 @@ export const tweetPool = [
     author: "Jenson Button",
     handle: "JensonButton",
     content: `{americarDriver2} seems more comfortable with the car upgrades than {americarDriver1}. Different driving styles suit different car characteristics.`,
+  },
+  // New Jenson Button tweets about midfield teams
+  {
+    id: "button-16",
+    author: "Jenson Button",
+    handle: "JensonButton",
+    content: `{thirdTeam}'s progress this season reminds me of Brawn GP in 2009. They've found a concept that works perfectly for the regulations and are maximizing every opportunity. Impressive stuff.`,
+  },
+  {
+    id: "button-17",
+    author: "Jenson Button",
+    handle: "JensonButton",
+    content: `{thirdDriver} is extracting everything from that {thirdTeam} car. Their qualifying performances have been particularly impressive - regularly making Q3 and occasionally troubling the top teams.`,
+  },
+  {
+    id: "button-18",
+    author: "Jenson Button",
+    handle: "JensonButton",
+    content: `The midfield battle between {fourthTeam} and {fifthTeam} is providing some of the best racing this season. Their cars have different strengths, which makes for fascinating on-track battles.`,
   },
 
   // Damon Hill tweets
@@ -803,6 +1165,25 @@ export const tweetPool = [
     handle: "HillF1",
     content: `{americarDriver2} has been overshadowed by their teammate, but there have been flashes of real speed. They just need to find consistency.`,
   },
+  // New Damon Hill tweets about midfield teams
+  {
+    id: "hill-16",
+    author: "Damon Hill",
+    handle: "HillF1",
+    content: `{thirdTeam} has been the revelation of the midfield this season. Their technical team has done a remarkable job with limited resources. Reminds me of Jordan in the mid-90s.`,
+  },
+  {
+    id: "hill-17",
+    author: "Damon Hill",
+    handle: "HillF1",
+    content: `The battle between {thirdTeam} and {fourthTeam} for P3 in the constructors' is providing some of the best storylines this season. Both teams have completely different philosophies but are ending up with similar performance.`,
+  },
+  {
+    id: "hill-18",
+    author: "Damon Hill",
+handle: "HillF1",
+    content: `{thirdDriver} is showing the kind of consistency that championship campaigns are built on. They're maximizing every opportunity in that {thirdTeam} car. Future world champion material.`,
+  },
 
   // Nico Rosberg tweets
   {
@@ -895,6 +1276,24 @@ export const tweetPool = [
     handle: "NicoRosberg",
     content: `{americarDriver2} needs to find more consistency. The flashes of speed are there, but too many weekends where they're off the pace.`,
   },
+  // New Nico Rosberg tweets about midfield teams
+  {
+    id: "rosberg-16",
+    author: "Nico Rosberg",
+    handle: "NicoRosberg",
+    content: `{thirdTeam}'s progress this season has been remarkable. Their car development rate is impressive - they've found at least half a second since the start of the season.`,
+  },
+  {
+    id: "rosberg-17",
+    author: "Nico Rosberg",
+    handle: "NicoRosberg",
+    content: `The battle for P3 in the constructors' between {thirdTeam} and {fourthTeam} is worth watching. Both teams have completely different car concepts, but are ending up with similar performance.`,
+  },
+  {
+    id: "rosberg-18",
+    author: "Nico Rosberg",
+    handle: "NicoRosberg",
+    content: `{thirdDriver} is extracting everything from that {thirdTeam} car. Their qualifying performances have been particularly impressive - regularly making Q3 and occasionally troubling the top teams.`,
 
   // Mark Webber tweets
   {
@@ -987,188 +1386,273 @@ export const tweetPool = [
     handle: "AussieGrit",
     content: `{americarDriver2} has shown flashes of real speed. With more experience, they could be a regular points scorer.`,
   },
-
-  // Natalie Pinkham tweets
+  // New Mark Webber tweets about midfield teams
   {
-    id: "pinkham-1",
-    author: "Natalie Pinkham",
-    handle: "NataliePinkham",
-    content: `Just interviewed {topDriver} - they're quietly confident about their chances at {currentRace}. The team has found something in the setup that's working really well.`,
+    id: "webber-16",
+    author: "Mark Webber",
+    handle: "AussieGrit",
+    content: `{thirdTeam} has been the surprise package this season. Their technical team has done a remarkable job with limited resources. The car is particularly strong in medium-speed corners.`,
   },
   {
-    id: "pinkham-2",
-    author: "Natalie Pinkham",
-    handle: "NataliePinkham",
-    content: `The atmosphere in the {topTeam} garage is so positive right now. Everyone pulling in the same direction. That harmony translates to performance on track.`,
+    id: "webber-17",
+    author: "Mark Webber",
+    handle: "AussieGrit",
+    content: `The midfield battle between {fourthTeam} and {fifthTeam} is providing some of the best racing this season. Their cars have different strengths, which makes for fascinating on-track battles.`,
   },
   {
-    id: "pinkham-3",
-    author: "Natalie Pinkham",
-    handle: "NataliePinkham",
-    content: `Fascinating chat with {americarTeam}'s Team Principal about their five-year plan. They're working hard on development and have clear goals.`,
-  },
-  {
-    id: "pinkham-4",
-    author: "Natalie Pinkham",
-    handle: "NataliePinkham",
-    content: `The fan turnout at {currentRace} is incredible! F1's popularity continues to soar. Sold-out grandstands and an electric atmosphere around the circuit.`,
-  },
-  {
-    id: "pinkham-5",
-    author: "Natalie Pinkham",
-    handle: "NataliePinkham",
-    content: `{secondDriver} seemed frustrated after qualifying. They feel there's more performance in the car that they haven't been able to extract.`,
-  },
-  {
-    id: "pinkham-6",
-    author: "Natalie Pinkham",
-    handle: "NataliePinkham",
-    content: `The {secondTeam} engineers were working late into the night. They've been making significant setup changes to find more pace.`,
-  },
-  {
-    id: "pinkham-7",
-    author: "Natalie Pinkham",
-    handle: "NataliePinkham",
-    content: `{americarDriver1} was in good spirits when I spoke to them this morning. They're happy with the progress the team is making.`,
-  },
-  {
-    id: "pinkham-8",
-    author: "Natalie Pinkham",
-    handle: "NataliePinkham",
-    content: `{lastRaceWinner} is still buzzing from their win at the last race. That victory has given them and the team a huge confidence boost.`,
-  },
-  {
-    id: "pinkham-9",
-    author: "Natalie Pinkham",
-    handle: "NataliePinkham",
-    content: `{thirdDriver} told me they've been working specifically on their qualifying performance. They know that's been their weakness this season.`,
-  },
-  {
-    id: "pinkham-10",
-    author: "Natalie Pinkham",
-    handle: "NataliePinkham",
-    content: `The paddock is buzzing with talk about the championship battle. Everyone expects {currentRace} to be a crucial turning point.`,
-  },
-  {
-    id: "pinkham-11",
-    author: "Natalie Pinkham",
-    handle: "NataliePinkham",
-    content: `{americarTeam}'s hospitality unit has been busy with potential sponsors this weekend. Their P{americarPosition} in the constructors' is attracting commercial interest.`,
-  },
-  {
-    id: "pinkham-12",
-    author: "Natalie Pinkham",
-    handle: "NataliePinkham",
-    content: `The drivers are all talking about the resurfaced section between Turns 5 and 7. Much smoother than last year, which should help with car balance.`,
-  },
-  {
-    id: "pinkham-13",
-    author: "Natalie Pinkham",
-    handle: "NataliePinkham",
-    content: `{topDriver} seems very relaxed despite the championship pressure. Their experience in these situations is showing.`,
-  },
-  {
-    id: "pinkham-14",
-    author: "Natalie Pinkham",
-    handle: "NataliePinkham",
-    content: `The {secondTeam} garage has been closed to media more than usual this weekend. Something special in the works, perhaps?`,
-  },
-  {
-    id: "pinkham-15",
-    author: "Natalie Pinkham",
-    handle: "NataliePinkham",
-    content: `{americarDriver2} has a special helmet design for {currentRace}. A tribute to their racing hero - nice touch.`,
+    id: "webber-18",
+    author: "Mark Webber",
+    handle: "AussieGrit",
+    content: `{thirdDriver} is showing the kind of consistency that championship campaigns are built on. They're maximizing every opportunity in that {thirdTeam} car. Future world champion material.`,
   },
 
-  // Lawrence Barretto tweets
+  // Add these new tweets about third place and midfield drivers to the tweet pool
+
+  // Tweets about third place driver
   {
-    id: "barretto-1",
-    author: "Lawrence Barretto",
-    handle: "LawroBarretto",
-    content: `Sources tell me {secondTeam} is planning a major upgrade package for {nextRace}. They're throwing everything at this championship battle.`,
+    id: "thirddriver-1",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `{thirdDriver} is in a fascinating position in this championship. Not quite in the title fight, but consistently delivering podiums. Their performances this season have been outstanding.`,
   },
   {
-    id: "barretto-2",
-    author: "Lawrence Barretto",
-    handle: "LawroBarretto",
-    content: `Hearing that {thirdDriver} has been putting in the hours on the simulator. They've identified the issues from last race and are confident they've found solutions.`,
+    id: "thirddriver-2",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `{thirdDriver} might not be in the championship battle, but they're having a stellar season. {thirdDriverPoints} points is an impressive haul, and they're making the most of every opportunity.`,
   },
   {
-    id: "barretto-3",
-    author: "Lawrence Barretto",
-    handle: "LawroBarretto",
-    content: `Paddock talk suggests {americarTeam} is already working on next year's car concept. Their technical director has big ambitions.`,
+    id: "thirddriver-3",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: {thirdDriver} has been the model of consistency this season. They've finished in the points in every race they've completed. That reliability is why they're P3 in the standings.`,
   },
   {
-    id: "barretto-4",
-    author: "Lawrence Barretto",
-    handle: "LawroBarretto",
-    content: `Team bosses meeting ran long today. Discussions about cost cap regulations and the 2026 rule changes getting heated. Politics is never far from the surface in F1.`,
+    id: "thirddriver-4",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `The telemetry data shows {thirdDriver} is actually faster than {secondDriver} in the slow-speed corners. If they can improve their straight-line speed, they could challenge for wins more regularly.`,
   },
   {
-    id: "barretto-5",
-    author: "Lawrence Barretto",
-    handle: "LawroBarretto",
-    content: `My sources at {topTeam} say they're confident they've solved the reliability issues that have plagued them in recent races.`,
+    id: "thirddriver-5",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `Just had a fascinating chat with {thirdDriver}. They're not giving up on P2 in the championship. It's still possible, and they're in it to win the big one.`,
   },
   {
-    id: "barretto-6",
-    author: "Lawrence Barretto",
-    handle: "LawroBarretto",
-    content: `Interesting whispers about {secondDriver}'s future. Their contract is up at the end of the season and several teams are showing interest.`,
+    id: "thirddriver-6",
+    author: "Jenson Button",
+    handle: "JensonButton",
+    content: `{thirdDriver}'s racecraft has been exceptional this season. Their overtaking is clean but assertive, and they rarely make mistakes under pressure. That's why they're P3 in the standings.`,
   },
   {
-    id: "barretto-7",
-    author: "Lawrence Barretto",
-    handle: "LawroBarretto",
-    content: `{americarTeam} is set to announce a new technical partnership next week. Part of their long-term plan to move up the grid.`,
+    id: "thirddriver-7",
+    author: "Damon Hill",
+    handle: "HillF1",
+    content: `{thirdDriver} reminds me a bit of myself in '94 and '95. Always there, always consistent, waiting to capitalize when the frontrunners slip up. That approach can win championships eventually.`,
   },
   {
-    id: "barretto-8",
-    author: "Lawrence Barretto",
-    handle: "LawroBarretto",
-    content: `The word in the paddock is that {lastRaceWinner} has found a new setup direction that's unlocked significant performance.`,
+    id: "thirddriver-8",
+    author: "Nico Rosberg",
+    handle: "NicoRosberg",
+    content: `{thirdDriver} is in that difficult P3 position - not quite in the title fight but too far ahead of P4. It's mentally challenging to maintain motivation, but they're handling it well.`,
   },
   {
-    id: "barretto-9",
-    author: "Lawrence Barretto",
-    handle: "LawroBarretto",
-    content: `Hearing that {thirdDriver}'s team is bringing their largest upgrade package of the season to {nextRace}. They're targeting a significant step forward.`,
+    id: "thirddriver-9",
+    author: "Mark Webber",
+    handle: "AussieGrit",
+    content: `{thirdDriver} has been extracting the maximum from their package all season. They've outperformed their teammate in {currentRaceIndex - 1} of the {currentRaceIndex} races so far. Impressive consistency.`,
   },
   {
-    id: "barretto-10",
-    author: "Lawrence Barretto",
-    handle: "LawroBarretto",
-    content: `Sources close to {topTeam} say they're already shifting some resources to next year's car. They're confident in their current package.`,
+    id: "thirddriver-10",
+    author: "Natalie Pinkham",
+    handle: "NataliePinkham",
+    content: `Just interviewed {thirdDriver} - they're focused on securing P3 in the championship but haven't given up on catching {secondDriver}. Their determination is impressive.`,
+  },
+
+  // Tweets about midfield drivers (P4-P10)
+  {
+    id: "midfield-driver-1",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `{fourthDriver} is having a breakthrough season. They're consistently extracting the maximum from that car and occasionally troubling the top three teams. Future champion material.`,
   },
   {
-    id: "barretto-11",
-    author: "Lawrence Barretto",
-    handle: "LawroBarretto",
-    content: `{americarTeam} is in talks with several experienced engineers from top teams. They're looking to strengthen their technical department.`,
+    id: "midfield-driver-2",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `What a drive from {fifthDriver} today! Fighting through from P12 to score solid points. They're making a strong case for a top team seat in the future.`,
   },
   {
-    id: "barretto-12",
-    author: "Lawrence Barretto",
-    handle: "LawroBarretto",
-    content: `The FIA is keeping a close eye on flexible wings this weekend. Several teams have been asked to make modifications.`,
+    id: "midfield-driver-3",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: {sixthDriver} has been quietly impressive this season. They've outqualified their more experienced teammate {currentRaceIndex - 3} times in {currentRaceIndex} races. The team is delighted with their progress.`,
   },
   {
-    id: "barretto-13",
-    author: "Lawrence Barretto",
-    handle: "LawroBarretto",
-    content: `Interesting to hear that {topDriver} has been working specifically on their race starts. That's been a relative weakness this season.`,
+    id: "midfield-driver-4",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `Looking at the data, {seventhDriver} is actually one of the fastest drivers in sector 2. Their car lacks straight-line speed, but in the technical sections, they're matching the top teams.`,
   },
   {
-    id: "barretto-14",
-    author: "Lawrence Barretto",
-    handle: "LawroBarretto",
-    content: `My sources at {secondTeam} say they've found a significant performance gain in the wind tunnel. The challenge now is translating that to the track.`,
+    id: "midfield-driver-5",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `Just had a great chat with {eighthDriver}. Despite the team's struggles, they remain positive and focused on development. Their technical feedback has been crucial in the team's recent progress.`,
   },
   {
-    id: "barretto-15",
-    author: "Lawrence Barretto",
-    handle: "LawroBarretto",
-    content: `Hearing that {americarDriver1} is very happy with the latest upgrades. They feel the car is now more suited to their driving style.`,
+    id: "midfield-driver-6",
+    author: "Jenson Button",
+    handle: "JensonButton",
+    content: `{ninthDriver} has impressed me with their race management this season. They're consistently getting the most out of the tires and making one-stop strategies work when others can't.`,
+  },
+  {
+    id: "midfield-driver-7",
+    author: "Damon Hill",
+    handle: "HillF1",
+    content: `{tenthDriver} is showing flashes of real talent in that midfield car. Their qualifying performances have been particularly impressive - regularly making Q3 in what's not the fastest package.`,
+  },
+  {
+    id: "midfield-driver-8",
+    author: "Nico Rosberg",
+    handle: "NicoRosberg",
+    content: `{fourthDriver} needs to capitalize more on their excellent qualifying performances. Too often they've slipped back in the races. Converting those grid positions into points will be key for the rest of the season.`,
+  },
+  {
+    id: "midfield-driver-9",
+    author: "Mark Webber",
+    handle: "AussieGrit",
+    content: `{fifthDriver} has been one of the most consistent performers in the midfield. They're maximizing every opportunity and rarely making mistakes. That's why they're leading the midfield battle.`,
+  },
+  {
+    id: "midfield-driver-10",
+    author: "Natalie Pinkham",
+    handle: "NataliePinkham",
+    content: `Just spoke with {sixthDriver} about their season so far. They're pleased with their personal performance but pushing the team for more development. Their ambition is clear - they want to be fighting at the front.`,
+  },
+
+  // More tweets about specific midfield battles
+  {
+    id: "midfield-battle-1",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `The battle between {fourthDriver} and {fifthDriver} for P4 in the drivers' championship is fascinating. They're wonderful friends off the track, though. Apparently, they took a trip to Dubai together recently.`,
+  },
+  {
+    id: "midfield-battle-2",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `The midfield battle at {currentRace} was absolutely thrilling! {sixthDriver}, {seventhDriver}, and {eighthDriver} were separated by less than a second for most of the race. That's what F1 is all about!`,
+  },
+  {
+    id: "midfield-battle-3",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: The fight between {fourthTeam} and {fifthTeam} for P4 in the constructors' is worth approximately $10-15 million in prize money. No wonder they're throwing everything at development.`,
+  },
+  {
+    id: "midfield-battle-4",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `Analyzing the midfield battle, {sixthTeam} has the better car on high-downforce circuits, while {seventhTeam} excels on tracks with long straights. The remaining calendar slightly favors {sixthTeam}.`,
+  },
+  {
+    id: "midfield-battle-5",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `The rivalry between {fourthDriver} and {fifthDriver} is becoming one of the most entertaining on the grid. They have tremendous respect for each other off-track, but they're absolutely fierce competitors on it.`,
+  },
+  {
+    id: "midfield-battle-6",
+    author: "Jenson Button",
+    handle: "JensonButton",
+    content: `The midfield teams are separated by such fine margins this season. {fourthTeam}, {fifthTeam}, and {sixthTeam} all have different strengths and weaknesses, but they're ending up with very similar performance overall.`,
+  },
+  {
+    id: "midfield-battle-7",
+    author: "Damon Hill",
+    handle: "HillF1",
+    content: `The battle between {seventhDriver} and {eighthDriver} reminds me of some of the great midfield rivalries of the past. Two evenly matched drivers in similar machinery, pushing each other to new heights.`,
+  },
+  {
+    id: "midfield-battle-8",
+    author: "Nico Rosberg",
+    handle: "NicoRosberg",
+    content: `{fourthDriver} vs {fifthDriver} is becoming the rivalry to watch in the midfield. They've had some fantastic wheel-to-wheel battles this season, always hard but fair. Great to see.`,
+  },
+  {
+    id: "midfield-battle-9",
+    author: "Mark Webber",
+    handle: "AussieGrit",
+    content: `The fight for best of the rest between {fourthDriver}, {fifthDriver}, and {sixthDriver} is providing some of the best racing this season. They're evenly matched and taking no prisoners.`,
+  },
+  {
+    id: "midfield-battle-10",
+    author: "Natalie Pinkham",
+    handle: "NataliePinkham",
+    content: `The atmosphere in the {fourthTeam} garage is electric right now. They've overtaken {fifthTeam} for P4 in the constructors' and are determined to hold onto it for the rest of the season.`,
+  },
+
+  // Additional tweets about specific midfield performances
+  {
+    id: "midfield-performance-1",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `{fourthDriver}'s drive at {currentRace} was one of the best midfield performances I've seen this season. They extracted absolutely everything from that car and deserved their P6 finish.`,
+  },
+  {
+    id: "midfield-performance-2",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `WHAT A MOVE by {fifthDriver}! Brilliant overtake around the outside of Turn 4 on {sixthDriver}. That's going straight into the season highlights reel!`,
+  },
+  {
+    id: "midfield-performance-3",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: {fourthTeam}'s upgrade package has delivered exactly what they promised. Their car is now much stronger in high-speed corners, which has helped them overtake {fifthTeam} in the standings.`,
+  },
+  {
+    id: "midfield-performance-4",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `{sixthDriver}'s qualifying lap was exceptional - P7 in a car that should realistically be fighting for P10-P12. They found over three tenths in the final sector alone. Brilliant driving.`,
+  },
+  {
+    id: "midfield-performance-5",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `{seventhDriver} told me they've completely changed their approach to race weekends since {currentRaceIndex - 5}. The results speak for themselves - they've scored points in {currentRaceIndex - 5} consecutive races.`,
+  },
+  {
+    id: "midfield-performance-6",
+    author: "Jenson Button",
+    handle: "JensonButton",
+    content: `{eighthDriver}'s defensive driving against {seventhDriver} in the closing laps was masterful. Firm but fair, never giving an inch but always leaving just enough space. That's how it's done.`,
+  },
+  {
+    id: "midfield-performance-7",
+    author: "Damon Hill",
+    handle: "HillF1",
+    content: `{fourthDriver} is extracting performance from that {fourthTeam} car that reminds me of what Alonso used to do at Ferrari. They're consistently finishing higher than the car deserves to be.`,
+  },
+  {
+    id: "midfield-performance-8",
+    author: "Nico Rosberg",
+    handle: "NicoRosberg",
+    content: `{fifthDriver}'s race pace has been exceptional in recent events. They're consistently one of the fastest midfield drivers on Sundays, even if their qualifying hasn't always shown it.`,
+  },
+  {
+    id: "midfield-performance-9",
+    author: "Mark Webber",
+    handle: "AussieGrit",
+    content: `{sixthDriver} has been quietly impressive this season. They've finished in the points in {currentRaceIndex - 2} of the {currentRaceIndex} races so far, which is remarkable consistency in that midfield battle.`,
+  },
+  {
+    id: "midfield-performance-10",
+    author: "Natalie Pinkham",
+    handle: "NataliePinkham",
+    content: `Just spoke with {fourthTeam}'s team principal about their recent form. They're delighted with {fourthDriver}'s performances and have some significant upgrades planned for the next few races.`,
   },
 ]

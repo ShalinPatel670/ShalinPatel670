@@ -142,24 +142,26 @@ export default function Newsroom({ drivers, teams, currentRaceIndex, raceResults
         </div>
 
         {loading ? (
-          // Loading skeletons
+          // Loading skeletons - show up to 12
           <div className="space-y-6">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="border border-gray-800 rounded-lg p-4">
-                <div className="flex items-start gap-3">
-                  <Skeleton className="h-12 w-12 rounded-full" />
-                  <div className="flex-1 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Skeleton className="h-4 w-32" />
-                      <Skeleton className="h-4 w-24" />
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+              .map((i) => (
+                <div key={i} className="border border-gray-800 rounded-lg p-4">
+                  <div className="flex items-start gap-3">
+                    <Skeleton className="h-12 w-12 rounded-full" />
+                    <div className="flex-1 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <Skeleton className="h-4 w-32" />
+                        <Skeleton className="h-4 w-24" />
+                      </div>
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-3/4" />
                     </div>
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-3/4" />
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+              .slice(0, tweets.length || 7)}
           </div>
         ) : tweets.length > 0 ? (
           // Tweets display
@@ -170,16 +172,12 @@ export default function Newsroom({ drivers, teams, currentRaceIndex, raceResults
                 className="border border-gray-800 rounded-lg p-4 hover:bg-[#252525] transition-colors"
               >
                 <div className="flex items-start gap-3">
-                  <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-800">
-                    <img
-                      src={tweet.avatar || "/placeholder.svg?height=48&width=48&text=" + tweet.author.charAt(0)}
-                      alt={tweet.author}
-                      className="h-full w-full object-cover"
-                      onError={(e) => {
-                        // If image fails to load, replace with placeholder
-                        e.currentTarget.src = `/placeholder.svg?height=48&width=48&text=${tweet.author.charAt(0)}`
-                      }}
-                    />
+                  <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-800 flex items-center justify-center text-white font-bold">
+                    {tweet.author
+                      .split(" ")
+                      .map((name) => name[0])
+                      .join("")
+                      .substring(0, 2)}
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-1">

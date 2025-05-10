@@ -1,16 +1,30 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import type React from "react"
+
+import { useState, useEffect, useRef } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Trophy, Flag, Users, ChevronRight, Save, RotateCcw, Newspaper } from "lucide-react"
+import {
+  Trophy,
+  Flag,
+  Users,
+  ChevronRight,
+  Save,
+  RotateCcw,
+  Newspaper,
+  Download,
+  Upload,
+  AlertCircle,
+} from "lucide-react"
 import DriversStandings from "@/components/drivers-standings"
 import ConstructorsStandings from "@/components/constructors-standings"
 import RaceInput from "@/components/race-input"
 import Newsroom from "@/components/newsroom"
 import { initialDrivers, initialTeams, races } from "@/lib/f1-data"
 import type { Driver, Team, RaceResult } from "@/lib/types"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 export default function F1Tracker() {
   const [currentRaceIndex, setCurrentRaceIndex] = useState(0)
@@ -21,6 +35,11 @@ export default function F1Tracker() {
   const [activeTab, setActiveTab] = useState("race")
   // Check if there's unsaved data
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
+  // Alert for file operations
+  const [alert, setAlert] = useState<{ type: "success" | "error"; message: string } | null>(null)
+
+  // Reference to file input element
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   // Load saved data from localStorage on component mount
   useEffect(() => {
@@ -66,6 +85,131 @@ export default function F1Tracker() {
       setCurrentRaceIndex(0)
       localStorage.removeItem("f1TrackerData")
       localStorage.removeItem("f1TrackerNewsroom")
+    }
+  }
+
+  // Export data to a file
+  const exportData = () => {
+    try {
+      // Create data object to export
+      const dataToExport = {
+        drivers,
+        teams,
+        raceResults,
+        currentRaceIndex,
+        version: "1.0", // Adding version for future compatibility
+        timestamp: new Date().toISOString(),
+      }
+
+      // Convert to JSON string
+      const jsonString = JSON.stringify(dataToExport, null, 2)
+
+      // Create a blob
+      const blob = new Blob([jsonString], { type: "application/json" })
+
+      // Create download link
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement("a")
+      link.href = url
+
+      // Create filename with date
+      const date = new Date().toISOString().split("T")[0]
+      link.download = `f1-tracker-save-${date}.json`
+
+      // Trigger download
+      document.body.appendChild(link)
+      link.click()
+
+      // Clean up
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
+
+      // Show success message
+      setAlert({
+        type: "success",
+        message: "Save file downloaded successfully!",
+      })
+
+      // Clear alert after 3 seconds
+      setTimeout(() => setAlert(null), 3000)
+    } catch (error) {
+      console.error("Error exporting data:", error)
+      setAlert({
+        type: "error",
+        message: "Failed to export data. Please try again.",
+      })
+      setTimeout(() => setAlert(null), 3000)
+    }
+  }
+
+  // Import data from a file
+  const importData = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    const reader = new FileReader()
+
+    reader.onload = (e) => {
+      try {
+        const content = e.target?.result as string
+        const importedData = JSON.parse(content)
+
+        // Validate imported data
+        if (!importedData.drivers || !importedData.teams || !Array.isArray(importedData.raceResults)) {
+          throw new Error("Invalid save file format")
+        }
+
+        // Apply imported data
+        setDrivers(importedData.drivers)
+        setTeams(importedData.teams)
+        setRaceResults(importedData.raceResults)
+        setCurrentRaceIndex(importedData.currentRaceIndex || 0)
+
+        // Save to localStorage
+        const dataToSave = {
+          savedDrivers: importedData.drivers,
+          savedTeams: importedData.teams,
+          savedRaceResults: importedData.raceResults,
+          savedCurrentRaceIndex: importedData.currentRaceIndex || 0,
+        }
+        localStorage.setItem("f1TrackerData", JSON.stringify(dataToSave))
+
+        // Show success message
+        setAlert({
+          type: "success",
+          message: "Save file loaded successfully!",
+        })
+        setTimeout(() => setAlert(null), 3000)
+      } catch (error) {
+        console.error("Error importing data:", error)
+        setAlert({
+          type: "error",
+          message: "Failed to import data. Invalid save file format.",
+        })
+        setTimeout(() => setAlert(null), 3000)
+      }
+    }
+
+    reader.onerror = () => {
+      setAlert({
+        type: "error",
+        message: "Error reading file. Please try again.",
+      })
+      setTimeout(() => setAlert(null), 3000)
+    }
+
+    reader.readAsText(file)
+
+    // Reset file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""
+    }
+  }
+
+  // Trigger file input click
+  const handleImportClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click()
     }
   }
 
@@ -167,6 +311,18 @@ export default function F1Tracker() {
         <p className="text-gray-400">Track the Drivers' and Constructors' Championships race by race</p>
       </header>
 
+      {alert && (
+        <Alert
+          className={`mb-4 ${alert.type === "success" ? "bg-green-900/20 border-green-800" : "bg-red-900/20 border-red-800"}`}
+        >
+          <AlertCircle className={`h-4 w-4 ${alert.type === "success" ? "text-green-400" : "text-red-400"}`} />
+          <AlertTitle className={alert.type === "success" ? "text-green-400" : "text-red-400"}>
+            {alert.type === "success" ? "Success" : "Error"}
+          </AlertTitle>
+          <AlertDescription className="text-gray-300">{alert.message}</AlertDescription>
+        </Alert>
+      )}
+
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center gap-2">
           <Flag className="h-5 w-5 text-[#e10600]" />
@@ -176,7 +332,7 @@ export default function F1Tracker() {
               : "Season Complete"}
           </h2>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap justify-end">
           <Button
             variant="outline"
             size="sm"
@@ -186,6 +342,29 @@ export default function F1Tracker() {
             <Save className={`h-4 w-4 mr-2 ${hasUnsavedChanges ? "text-[#e10600]" : ""}`} />
             {hasUnsavedChanges ? "Save*" : "Save"}
           </Button>
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={exportData}
+            className="bg-transparent border-gray-700 hover:bg-gray-800"
+          >
+            <Download className="h-4 w-4 mr-2" />
+            Export
+          </Button>
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleImportClick}
+            className="bg-transparent border-gray-700 hover:bg-gray-800"
+          >
+            <Upload className="h-4 w-4 mr-2" />
+            Import
+          </Button>
+
+          <input type="file" ref={fileInputRef} onChange={importData} accept=".json" className="hidden" />
+
           <Button variant="destructive" size="sm" onClick={resetData} className="bg-[#e10600] hover:bg-[#b30500]">
             <RotateCcw className="h-4 w-4 mr-2" />
             Reset

@@ -13,37 +13,37 @@ interface RaceInputProps {
 }
 
 export default function RaceInput({ drivers, onSubmit }: RaceInputProps) {
-  const [positions, setPositions] = useState<Record<string, number>>({})
+  // Instead of storing positions by driver ID, we store driver IDs by position
+  const [selectedDrivers, setSelectedDrivers] = useState<Record<number, string>>({})
   const [fastestLap, setFastestLap] = useState<string | null>(null)
   const [errors, setErrors] = useState<string[]>([])
 
-  // Check if a position is already assigned to another driver
-  const isPositionTaken = (pos: number, currentDriverId: string): boolean => {
-    return Object.entries(positions).some(([driverId, position]) => position === pos && driverId !== currentDriverId)
+  // Check if a driver is already assigned to another position
+  const isDriverSelected = (driverId: string, currentPosition: number): boolean => {
+    return Object.entries(selectedDrivers).some(
+      ([position, id]) => id === driverId && Number.parseInt(position) !== currentPosition,
+    )
   }
 
-  // Handle position change for a driver
-  const handlePositionChange = (driverId: string, position: number) => {
-    setPositions((prev) => ({
+  // Handle driver selection for a position
+  const handleDriverSelection = (position: number, driverId: string) => {
+    setSelectedDrivers((prev) => ({
       ...prev,
-      [driverId]: position,
+      [position]: driverId,
     }))
   }
 
   // Submit race results
   const handleSubmit = () => {
-    // Validate that all drivers have positions
+    // Validate that all positions have drivers
     const newErrors: string[] = []
 
-    if (Object.keys(positions).length !== drivers.length) {
-      newErrors.push("All drivers must have a position assigned")
-    }
-
-    // Check for duplicate positions
-    const positionValues = Object.values(positions)
-    const uniquePositions = new Set(positionValues)
-    if (positionValues.length !== uniquePositions.size) {
-      newErrors.push("Each position can only be assigned to one driver")
+    // Check if all positions from 1 to drivers.length have a driver assigned
+    for (let i = 1; i <= drivers.length; i++) {
+      if (!selectedDrivers[i]) {
+        newErrors.push(`Position ${i} must have a driver assigned`)
+        break // Just show one error for missing positions
+      }
     }
 
     if (!fastestLap) {
@@ -56,12 +56,30 @@ export default function RaceInput({ drivers, onSubmit }: RaceInputProps) {
     }
 
     // Format results
-    const results: RaceResult[] = drivers.map((driver) => ({
-      driverId: driver.id,
-      position: positions[driver.id] || 0,
+    const results: RaceResult[] = Object.entries(selectedDrivers).map(([position, driverId]) => ({
+      driverId,
+      position: Number.parseInt(position),
     }))
 
     onSubmit(results, fastestLap)
+  }
+
+  // Get driver name by ID
+  const getDriverName = (driverId: string): string => {
+    const driver = drivers.find((d) => d.id === driverId)
+    return driver ? driver.name : ""
+  }
+
+  // Get driver team color by ID
+  const getDriverTeamColor = (driverId: string): string => {
+    const driver = drivers.find((d) => d.id === driverId)
+    return driver ? getTeamColor(driver.team) : "#CCCCCC"
+  }
+
+  // Get driver team name by ID
+  const getDriverTeamName = (driverId: string): string => {
+    const driver = drivers.find((d) => d.id === driverId)
+    return driver ? driver.teamName : ""
   }
 
   return (
@@ -78,29 +96,41 @@ export default function RaceInput({ drivers, onSubmit }: RaceInputProps) {
       )}
 
       <div className="space-y-4 mb-8">
-        {drivers.map((driver) => (
-          <div key={driver.id} className="flex items-center gap-4">
-            <div className="w-1 h-12 rounded-sm" style={{ backgroundColor: getTeamColor(driver.team) }}></div>
-            <div className="flex-1">
-              <div className="font-bold text-white">{driver.name}</div>
-              <div className="text-sm text-gray-400">{driver.teamName}</div>
-            </div>
+        {Array.from({ length: drivers.length }, (_, i) => i + 1).map((position) => (
+          <div key={position} className="flex items-center gap-4">
+            <div className="w-12 font-mono font-bold text-white">P{position}</div>
+
+            {selectedDrivers[position] ? (
+              <div className="flex-1 flex items-center">
+                <div
+                  className="w-1 h-12 mr-3 rounded-sm"
+                  style={{ backgroundColor: getDriverTeamColor(selectedDrivers[position]) }}
+                ></div>
+                <div>
+                  <div className="font-bold text-white">{getDriverName(selectedDrivers[position])}</div>
+                  <div className="text-sm text-gray-400">{getDriverTeamName(selectedDrivers[position])}</div>
+                </div>
+              </div>
+            ) : (
+              <div className="flex-1 text-gray-500 italic">Select driver</div>
+            )}
+
             <Select
-              value={positions[driver.id]?.toString() || ""}
-              onValueChange={(value) => handlePositionChange(driver.id, Number.parseInt(value))}
+              value={selectedDrivers[position] || ""}
+              onValueChange={(value) => handleDriverSelection(position, value)}
             >
-              <SelectTrigger className="w-24 bg-[#252525] border-gray-700 text-white">
-                <SelectValue placeholder="Pos" className="text-white" />
+              <SelectTrigger className="w-48 bg-[#252525] border-gray-700 text-white">
+                <SelectValue placeholder="Select driver" className="text-white" />
               </SelectTrigger>
               <SelectContent className="bg-[#252525] border-gray-700">
-                {Array.from({ length: 22 }, (_, i) => i + 1).map((pos) => (
+                {drivers.map((driver) => (
                   <SelectItem
-                    key={pos}
-                    value={pos.toString()}
-                    disabled={isPositionTaken(pos, driver.id)}
+                    key={driver.id}
+                    value={driver.id}
+                    disabled={isDriverSelected(driver.id, position)}
                     className="hover:bg-[#333333] text-white"
                   >
-                    {pos}
+                    {driver.name} ({driver.code})
                   </SelectItem>
                 ))}
               </SelectContent>
