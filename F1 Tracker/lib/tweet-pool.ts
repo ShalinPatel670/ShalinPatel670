@@ -1,5 +1,165 @@
 // A large pool of tweets with placeholders for dynamic content
 export const tweetPool = [
+  // Pre-season tweets (Before Bahrain)
+  {
+    id: "preseason-1",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `The anticipation is building! Just days until the new F1 season kicks off in Bahrain. Testing showed some interesting trends - {topTeam} looks strong, but {secondTeam} might have something special up their sleeve.`,
+  },
+  {
+    id: "preseason-2",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `LIGHTS OUT AND AWAY WE GO! Well, almost! Just a few more sleeps until the 2024 F1 season begins in Bahrain. The winter testing has thrown up some surprises - who's your money on for the first race?`,
+  },
+  {
+    id: "preseason-3",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: The pre-season testing data shows some fascinating trends. {topTeam} has the raw pace, but reliability could be their Achilles heel. {lowestTeam} has made significant progress over the winter.`,
+  },
+  {
+    id: "preseason-4",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `Looking at the long-run data from testing, {topDriver} seems to have the best race pace. But {lowestDriver} has shown impressive consistency in the {lowestTeam} car. Bahrain will tell us more.`,
+  },
+  {
+    id: "preseason-5",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `The paddock is buzzing with anticipation ahead of Bahrain. {topTeam} looks formidable, but {secondTeam} has been sandbagging in testing. This could be one of the closest seasons in years!`,
+  },
+
+  // Mid-season break tweets
+  {
+    id: "midseason-1",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `As we head into the summer break, {topDriver} leads the championship by {Math.abs(sortedDrivers[0].points - sortedDrivers[1].points)} points. But with {totalRaces - currentRaceIndex} races to go, anything can happen!`,
+  },
+  {
+    id: "midseason-2",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `Mid-season report: {topTeam} leads the constructors' by {Math.abs(sortedTeams[0].points - sortedTeams[1].points)} points, but {secondTeam} has been closing the gap. The development race during the break will be crucial!`,
+  },
+  {
+    id: "midseason-3",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: The summer break is when teams make their biggest upgrades. {lowestTeam} has a major package coming after the break - they're targeting a significant step forward.`,
+  },
+  {
+    id: "midseason-4",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `Mid-season analysis: {lowestDriver} has been the surprise package, consistently outperforming their car. Meanwhile, {topDriver} has been in a league of their own. The second half promises to be thrilling!`,
+  },
+  {
+    id: "midseason-5",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `The summer break is here! {topTeam} leads both championships, but {secondTeam} is closing in. The development race during the break could decide this championship.`,
+  },
+
+  // Pre-Abu Dhabi tweets
+  {
+    id: "preabudhabi-1",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `The season finale in Abu Dhabi is upon us! {topDriver} leads by {Math.abs(sortedDrivers[0].points - sortedDrivers[1].points)} points. One last race to decide it all - this is what F1 is all about!`,
+  },
+  {
+    id: "preabudhabi-2",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `It all comes down to this! Abu Dhabi will crown our 2024 champions. {topDriver} vs {secondDriver} for the drivers' title, {topTeam} vs {secondTeam} for the constructors'. The tension is palpable!`,
+  },
+  {
+    id: "preabudhabi-3",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: The teams have saved their final upgrades for Abu Dhabi. {lowestTeam} has a special package for the finale - they're determined to end the season on a high.`,
+  },
+  {
+    id: "preabudhabi-4",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `The championship permutations are fascinating. {topDriver} needs to finish P{Math.ceil((sortedDrivers[1].points - sortedDrivers[0].points + 25) / 25)} or higher to secure the title. Abu Dhabi has delivered drama before!`,
+  },
+  {
+    id: "preabudhabi-5",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `The paddock is electric ahead of the season finale. {lowestDriver} has a point to prove, while {topDriver} looks to cap off a remarkable season. Abu Dhabi, here we come!`,
+  },
+
+  // Post-season tweets
+  {
+    id: "postseason-1",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `What a season it's been! Congratulations to {championDriver} on their {championDriverTitles} world championship. The way they've driven this year has been nothing short of spectacular.`,
+  },
+  {
+    id: "postseason-2",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `And that's a wrap on the 2024 F1 season! {championTeam} takes the constructors' championship in style. Their consistency and development throughout the year has been remarkable.`,
+  },
+  {
+    id: "postseason-3",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Season review: {lowestTeam} has made significant progress, while {championTeam} has set new standards. The development race never stops - teams are already working on their 2025 cars!`,
+  },
+  {
+    id: "postseason-4",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `Looking back at 2024: {lowestDriver} has been the revelation of the season, consistently outperforming their car. Meanwhile, {championDriver} has been in a league of their own.`,
+  },
+  {
+    id: "postseason-5",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `The 2024 season will be remembered for {championDriver}'s dominance and {lowestTeam}'s remarkable progress. The 2025 regulations are already creating excitement in the paddock!`,
+  },
+
+  // More tweets about lower-ranked teams
+  {
+    id: "lowerteams-1",
+    author: "Martin Brundle",
+    handle: "MBrundleF1",
+    content: `{lowestTeam} has been quietly making progress. Their car concept is unique, and they're starting to see the benefits. Don't be surprised if they're fighting for points more regularly next season.`,
+  },
+  {
+    id: "lowerteams-2",
+    author: "David Croft",
+    handle: "CroftyF1",
+    content: `The battle at the back is just as intense as the fight at the front! {lowestDriver} has been extracting everything from that {lowestTeam} car. Their qualifying performances have been particularly impressive.`,
+  },
+  {
+    id: "lowerteams-3",
+    author: "Ted Kravitz",
+    handle: "TedKravitz",
+    content: `Notebook time: {lowestTeam} has brought some interesting upgrades to {currentRace}. Their technical team is thinking outside the box, and it's starting to pay dividends.`,
+  },
+  {
+    id: "lowerteams-4",
+    author: "Karun Chandhok",
+    handle: "karunchandhok",
+    content: `The data shows {lowestDriver} is actually faster in sector 2 than several midfield drivers. If {lowestTeam} can improve their straight-line speed, they could be regular points scorers.`,
+  },
+  {
+    id: "lowerteams-5",
+    author: "Will Buxton",
+    handle: "wbuxtonofficial",
+    content: `{lowestTeam} has a clear vision for their future in F1. Their technical structure is solid, and they're making steady progress. Don't write them off for next season!`,
+  },
+
   // Martin Brundle tweets
   {
     id: "brundle-1",

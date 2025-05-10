@@ -128,6 +128,10 @@ export default function F1Tracker() {
 
     if (currentRaceIndex < races.length - 1) {
       setCurrentRaceIndex(currentRaceIndex + 1)
+
+      // Clear newsroom data when moving to a new race to ensure fresh tweets
+      localStorage.removeItem("f1TrackerNewsroom")
+
       setActiveTab("race")
     }
   }

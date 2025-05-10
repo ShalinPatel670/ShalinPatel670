@@ -74,7 +74,12 @@ export default function Newsroom({ drivers, teams, currentRaceIndex, raceResults
   const generateNews = async () => {
     setLoading(true)
     setError(null)
-    resetUsedTweets()
+
+    // Only reset used tweets at the start of a new season
+    if (currentRaceIndex === 0 && !raceResults[0]) {
+      setUsedTweetIds([])
+      localStorage.removeItem("f1TrackerUsedTweets")
+    }
 
     try {
       const response = await fetch("/api/generate-news", {
@@ -167,9 +172,13 @@ export default function Newsroom({ drivers, teams, currentRaceIndex, raceResults
                 <div className="flex items-start gap-3">
                   <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-800">
                     <img
-                      src={tweet.avatar || `/placeholder.svg?height=48&width=48&text=${tweet.author.charAt(0)}`}
+                      src={tweet.avatar || "/placeholder.svg?height=48&width=48&text=" + tweet.author.charAt(0)}
                       alt={tweet.author}
                       className="h-full w-full object-cover"
+                      onError={(e) => {
+                        // If image fails to load, replace with placeholder
+                        e.currentTarget.src = `/placeholder.svg?height=48&width=48&text=${tweet.author.charAt(0)}`
+                      }}
                     />
                   </div>
                   <div className="flex-1">

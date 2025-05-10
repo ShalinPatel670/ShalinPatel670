@@ -3,56 +3,56 @@ export const commentatorImages = [
   {
     name: "Martin Brundle",
     handle: "MBrundleF1",
-    image: "https://i.ibb.co/Jm8Sn0S/martin-brundle.png",
+    image: "https://cdn-7.motorsport.com/images/amp/0RrX3vE0/s6/martin-brundle-sky-f1.jpg",
   },
   {
     name: "David Croft",
     handle: "CroftyF1",
-    image: "https://i.ibb.co/Jm8Sn0S/david-croft.png",
+    image: "https://cdn-7.motorsport.com/images/amp/0RrX3vE0/s6/martin-brundle-sky-f1.jpg", // Using same image as placeholder
   },
   {
     name: "Ted Kravitz",
     handle: "TedKravitz",
-    image: "https://i.ibb.co/Jm8Sn0S/ted-kravitz.png",
+    image: "https://cdn-7.motorsport.com/images/amp/0RrX3vE0/s6/martin-brundle-sky-f1.jpg", // Using same image as placeholder
   },
   {
     name: "Karun Chandhok",
     handle: "karunchandhok",
-    image: "https://i.ibb.co/Jm8Sn0S/karun-chandhok.png",
+    image: "https://cdn-7.motorsport.com/images/amp/0RrX3vE0/s6/martin-brundle-sky-f1.jpg", // Using same image as placeholder
   },
   {
     name: "Will Buxton",
     handle: "wbuxtonofficial",
-    image: "https://i.ibb.co/Jm8Sn0S/will-buxton.png",
+    image: "https://cdn-7.motorsport.com/images/amp/0RrX3vE0/s6/martin-brundle-sky-f1.jpg", // Using same image as placeholder
   },
   {
     name: "Jenson Button",
     handle: "JensonButton",
-    image: "https://i.ibb.co/Jm8Sn0S/jenson-button.png",
+    image: "https://cdn-7.motorsport.com/images/amp/0RrX3vE0/s6/martin-brundle-sky-f1.jpg", // Using same image as placeholder
   },
   {
     name: "Damon Hill",
     handle: "HillF1",
-    image: "https://i.ibb.co/Jm8Sn0S/damon-hill.png",
+    image: "https://cdn-7.motorsport.com/images/amp/0RrX3vE0/s6/martin-brundle-sky-f1.jpg", // Using same image as placeholder
   },
   {
     name: "Nico Rosberg",
     handle: "NicoRosberg",
-    image: "https://i.ibb.co/Jm8Sn0S/nico-rosberg.png",
+    image: "https://cdn-7.motorsport.com/images/amp/0RrX3vE0/s6/martin-brundle-sky-f1.jpg", // Using same image as placeholder
   },
   {
     name: "Mark Webber",
     handle: "AussieGrit",
-    image: "https://i.ibb.co/Jm8Sn0S/mark-webber.png",
+    image: "https://cdn-7.motorsport.com/images/amp/0RrX3vE0/s6/martin-brundle-sky-f1.jpg", // Using same image as placeholder
   },
   {
     name: "Natalie Pinkham",
     handle: "NataliePinkham",
-    image: "https://i.ibb.co/Jm8Sn0S/natalie-pinkham.png",
+    image: "https://cdn-7.motorsport.com/images/amp/0RrX3vE0/s6/martin-brundle-sky-f1.jpg", // Using same image as placeholder
   },
   {
     name: "Lawrence Barretto",
     handle: "LawroBarretto",
-    image: "https://i.ibb.co/Jm8Sn0S/lawrence-barretto.png",
+    image: "https://cdn-7.motorsport.com/images/amp/0RrX3vE0/s6/martin-brundle-sky-f1.jpg", // Using same image as placeholder
   },
 ]

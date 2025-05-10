@@ -46,7 +46,9 @@ export async function POST(request: Request) {
         likes: Math.floor(Math.random() * 2000) + 100,
         retweets: Math.floor(Math.random() * 500) + 50,
         replies: Math.floor(Math.random() * 200) + 20,
-        avatar: commentatorImage?.image || `/commentators/default.png`,
+        avatar:
+          commentatorImage?.image ||
+          `https://ui-avatars.com/api/?name=${encodeURIComponent(tweet.author)}&background=random`,
       }
     })
 
@@ -102,6 +104,13 @@ function generateTweetsFromPool(
   const topTeam = sortedTeams[0] || { name: "the top team" }
   const secondTeam = sortedTeams[1] || { name: "the second-place team" }
 
+  // Get lowest drivers and teams (for bottom of standings tweets)
+  const lowestDriver = sortedDrivers[sortedDrivers.length - 1] || {
+    name: "the driver at the back",
+    teamName: "their team",
+  }
+  const lowestTeam = sortedTeams[sortedTeams.length - 1] || { name: "the team at the back" }
+
   // Get Americar info
   const americarTeam = teams.find((team) => team.id === "americar")
   const americarDrivers = drivers.filter((driver) => driver.team === "americar")
@@ -132,8 +141,43 @@ function generateTweetsFromPool(
   // Next race (if available)
   const nextRace = currentRaceIndex < races.length - 1 ? races[currentRaceIndex + 1] : "the final race"
 
+  // Determine season state
+  const totalRaces = races.length
+  const isPreSeason = currentRaceIndex === 0 && !raceResults[0] // Before first race
+  const isMidSeasonBreak = currentRaceIndex === Math.floor(totalRaces / 2) // Middle of season
+  const isAbuDhabi = currentRaceIndex === totalRaces - 1 && !raceResults[currentRaceIndex] // Before final race
+  const isPostSeason = currentRaceIndex === totalRaces - 1 && raceResults[currentRaceIndex] // After final race
+
+  // Filter tweets based on season state
+  let filteredTweetPool = [...tweetPool]
+
+  // If we're in a special period, only use tweets for that period
+  if (isPreSeason) {
+    filteredTweetPool = tweetPool.filter((tweet) => tweet.id.startsWith("preseason-"))
+    console.log("Using pre-season tweets")
+  } else if (isMidSeasonBreak) {
+    filteredTweetPool = tweetPool.filter((tweet) => tweet.id.startsWith("midseason-"))
+    console.log("Using mid-season break tweets")
+  } else if (isAbuDhabi) {
+    filteredTweetPool = tweetPool.filter((tweet) => tweet.id.startsWith("preabudhabi-"))
+    console.log("Using pre-Abu Dhabi tweets")
+  } else if (isPostSeason) {
+    filteredTweetPool = tweetPool.filter((tweet) => tweet.id.startsWith("postseason-"))
+    console.log("Using post-season tweets")
+  } else {
+    // For regular races, exclude special period tweets
+    filteredTweetPool = tweetPool.filter(
+      (tweet) =>
+        !tweet.id.startsWith("preseason-") &&
+        !tweet.id.startsWith("midseason-") &&
+        !tweet.id.startsWith("preabudhabi-") &&
+        !tweet.id.startsWith("postseason-"),
+    )
+    console.log("Using regular race tweets")
+  }
+
   // Create a large pool of tweets with dynamic content
-  const dynamicTweetPool = tweetPool.map((tweet) => {
+  const dynamicTweetPool = filteredTweetPool.map((tweet) => {
     // Replace placeholders with actual data
     let content = tweet.content
       .replace(/\{topDriver\}/g, topDriver.name)
@@ -143,6 +187,8 @@ function generateTweetsFromPool(
       .replace(/\{thirdDriver\}/g, thirdDriver.name)
       .replace(/\{topTeam\}/g, topTeam.name)
       .replace(/\{secondTeam\}/g, secondTeam.name)
+      .replace(/\{lowestDriver\}/g, lowestDriver.name)
+      .replace(/\{lowestTeam\}/g, lowestTeam.name)
       .replace(/\{americarDriver1\}/g, americarDriver1)
       .replace(/\{americarDriver2\}/g, americarDriver2)
       .replace(/\{americarTeam\}/g, americarTeam?.name || "Americar")
