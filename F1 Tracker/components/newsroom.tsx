@@ -97,12 +97,17 @@ export default function Newsroom({ drivers, teams, currentRaceIndex, raceResults
       })
 
       if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`)
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(`Server error: ${response.status}${errorData.details ? ` - ${errorData.details}` : ""}`)
       }
 
       const data = await response.json()
-      setTweets(data.tweets)
-      saveTweets(data.tweets)
+      if (data.tweets && Array.isArray(data.tweets)) {
+        setTweets(data.tweets)
+        saveTweets(data.tweets)
+      } else {
+        throw new Error("Invalid response format")
+      }
     } catch (err: any) {
       console.error("Error generating news:", err)
       setError(err.message || "Failed to generate news. Please try again.")
@@ -138,30 +143,28 @@ export default function Newsroom({ drivers, teams, currentRaceIndex, raceResults
         {error && <div className="mb-4 p-3 bg-red-900/30 border border-red-800 rounded-md text-red-300">{error}</div>}
 
         <div className="text-sm text-gray-400 mb-4">
-          Latest commentary about {races[currentRaceIndex]} and the championship standings
+          Latest commentary about {races[currentRaceIndex] || "the current race"} and the championship standings
         </div>
 
         {loading ? (
           // Loading skeletons - show up to 12
           <div className="space-y-6">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-              .map((i) => (
-                <div key={i} className="border border-gray-800 rounded-lg p-4">
-                  <div className="flex items-start gap-3">
-                    <Skeleton className="h-12 w-12 rounded-full" />
-                    <div className="flex-1 space-y-2">
-                      <div className="flex items-center gap-2">
-                        <Skeleton className="h-4 w-32" />
-                        <Skeleton className="h-4 w-24" />
-                      </div>
-                      <Skeleton className="h-4 w-full" />
-                      <Skeleton className="h-4 w-full" />
-                      <Skeleton className="h-4 w-3/4" />
+            {[1, 2, 3, 4, 5, 6, 7].map((i) => (
+              <div key={i} className="border border-gray-800 rounded-lg p-4">
+                <div className="flex items-start gap-3">
+                  <Skeleton className="h-12 w-12 rounded-full" />
+                  <div className="flex-1 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <Skeleton className="h-4 w-32" />
+                      <Skeleton className="h-4 w-24" />
                     </div>
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-3/4" />
                   </div>
                 </div>
-              ))
-              .slice(0, tweets.length || 7)}
+              </div>
+            ))}
           </div>
         ) : tweets.length > 0 ? (
           // Tweets display

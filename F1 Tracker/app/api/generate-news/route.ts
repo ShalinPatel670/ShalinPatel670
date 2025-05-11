@@ -6,33 +6,13 @@ import { tweetPool } from "@/lib/tweet-pool"
 
 export async function POST(request: Request) {
   try {
-    const { drivers, teams, currentRaceIndex, raceResults } = await request.json()
-
-    // Get used tweet IDs from localStorage (if available on client)
-    let usedTweetIds: string[] = []
-    try {
-      const savedUsedTweets = localStorage.getItem("f1TrackerUsedTweets")
-      if (savedUsedTweets) {
-        usedTweetIds = JSON.parse(savedUsedTweets)
-      }
-    } catch (e) {
-      // If localStorage is not available (server-side), we'll start with an empty array
-      console.log("Could not access localStorage for used tweets")
-    }
+    const { drivers, teams, currentRaceIndex, raceResults, usedTweetIds = [] } = await request.json()
 
     // Generate tweets using the expanded tweet pool
     const tweets = generateTweetsFromPool(drivers, teams, currentRaceIndex, raceResults, usedTweetIds)
 
-    // Save the newly used tweet IDs
-    const newUsedTweetIds = tweets.map((tweet) => tweet.id)
-    try {
-      localStorage.setItem("f1TrackerUsedTweets", JSON.stringify([...usedTweetIds, ...newUsedTweetIds]))
-    } catch (e) {
-      console.log("Could not save used tweets to localStorage")
-    }
-
     // Add additional tweet metadata and match with commentator images
-    const processedTweets = tweets.map((tweet: any, index: number) => {
+    const processedTweets = tweets.map((tweet) => {
       // Find the commentator image or use a default
       const commentatorImage = commentatorImages.find(
         (c) =>
@@ -52,10 +32,10 @@ export async function POST(request: Request) {
       }
     })
 
-    return NextResponse.json({ tweets: processedTweets, usingFallback: true })
+    return NextResponse.json({ tweets: processedTweets })
   } catch (error) {
     console.error("Error generating news:", error)
-    return NextResponse.json({ error: "Failed to generate news" }, { status: 500 })
+    return NextResponse.json({ error: "Failed to generate news", details: String(error) }, { status: 500 })
   }
 }
 
@@ -75,7 +55,6 @@ function getDriverIdByPosition(results: RaceResult[], position: number): string 
 function getRandomTimestamp(): string {
   const now = new Date()
   const minutesAgo = Math.floor(Math.random() * 120) + 1 // 1-120 minutes ago
-  const timestamp = new Date(now.getTime() - minutesAgo * 60000)
 
   // Format as "2h" or "45m" ago
   if (minutesAgo >= 60) {
@@ -91,245 +70,268 @@ function generateTweetsFromPool(
   teams: Team[],
   currentRaceIndex: number,
   raceResults: RaceResult[][],
-  usedTweetIds: string[],
+  usedTweetIds: string[] = [],
 ) {
-  // Sort drivers and teams by points
-  const sortedDrivers = [...drivers].sort((a, b) => b.points - a.points)
-  const sortedTeams = [...teams].sort((a, b) => b.points - a.points)
+  try {
+    // Sort drivers and teams by points
+    const sortedDrivers = [...drivers].sort((a, b) => b.points - a.points)
+    const sortedTeams = [...teams].sort((a, b) => b.points - a.points)
 
-  // Get top drivers and teams
-  const topDriver = sortedDrivers[0] || { name: "the championship leader", teamName: "the top team", points: 0 }
-  const secondDriver = sortedDrivers[1] || { name: "the second-place driver", teamName: "their team", points: 0 }
-  const thirdDriver = sortedDrivers[2] || { name: "the third-place driver", teamName: "their team", points: 0 }
-  const fourthDriver = sortedDrivers[3] || { name: "the fourth-place driver", teamName: "their team", points: 0 }
-  const fifthDriver = sortedDrivers[4] || { name: "the fifth-place driver", teamName: "their team", points: 0 }
-  const sixthDriver = sortedDrivers[5] || { name: "the sixth-place driver", teamName: "their team", points: 0 }
-  const seventhDriver = sortedDrivers[6] || { name: "the seventh-place driver", teamName: "their team", points: 0 }
-  const eighthDriver = sortedDrivers[7] || { name: "the eighth-place driver", teamName: "their team", points: 0 }
-  const ninthDriver = sortedDrivers[8] || { name: "the ninth-place driver", teamName: "their team", points: 0 }
-  const tenthDriver = sortedDrivers[9] || { name: "the tenth-place driver", teamName: "their team", points: 0 }
+    // Get top drivers and teams
+    const topDriver = sortedDrivers[0] || { name: "the championship leader", teamName: "the top team", points: 0 }
+    const secondDriver = sortedDrivers[1] || { name: "the second-place driver", teamName: "their team", points: 0 }
+    const thirdDriver = sortedDrivers[2] || { name: "the third-place driver", teamName: "their team", points: 0 }
+    const fourthDriver = sortedDrivers[3] || { name: "the fourth-place driver", teamName: "their team", points: 0 }
+    const fifthDriver = sortedDrivers[4] || { name: "the fifth-place driver", teamName: "their team", points: 0 }
+    const sixthDriver = sortedDrivers[5] || { name: "the sixth-place driver", teamName: "their team", points: 0 }
+    const seventhDriver = sortedDrivers[6] || { name: "the seventh-place driver", teamName: "their team", points: 0 }
+    const eighthDriver = sortedDrivers[7] || { name: "the eighth-place driver", teamName: "their team", points: 0 }
+    const ninthDriver = sortedDrivers[8] || { name: "the ninth-place driver", teamName: "their team", points: 0 }
+    const tenthDriver = sortedDrivers[9] || { name: "the tenth-place driver", teamName: "their team", points: 0 }
 
-  const topTeam = sortedTeams[0] || { name: "the top team", points: 0 }
-  const secondTeam = sortedTeams[1] || { name: "the second-place team", points: 0 }
+    const topTeam = sortedTeams[0] || { name: "the top team", points: 0 }
+    const secondTeam = sortedTeams[1] || { name: "the second-place team", points: 0 }
 
-  // Get midfield teams (3rd to 7th)
-  const thirdTeam = sortedTeams[2] || { name: "the third-place team", points: 0 }
-  const fourthTeam = sortedTeams[3] || { name: "the fourth-place team", points: 0 }
-  const fifthTeam = sortedTeams[4] || { name: "the fifth-place team", points: 0 }
-  const sixthTeam = sortedTeams[5] || { name: "the sixth-place team", points: 0 }
-  const seventhTeam = sortedTeams[6] || { name: "the seventh-place team", points: 0 }
+    // Get midfield teams (3rd to 7th)
+    const thirdTeam = sortedTeams[2] || { name: "the third-place team", points: 0 }
+    const fourthTeam = sortedTeams[3] || { name: "the fourth-place team", points: 0 }
+    const fifthTeam = sortedTeams[4] || { name: "the fifth-place team", points: 0 }
+    const sixthTeam = sortedTeams[5] || { name: "the sixth-place team", points: 0 }
+    const seventhTeam = sortedTeams[6] || { name: "the seventh-place team", points: 0 }
 
-  // Get lowest drivers and teams (for bottom of standings tweets)
-  const lowestDriver = sortedDrivers[sortedDrivers.length - 1] || {
-    name: "the driver at the back",
-    teamName: "their team",
-    points: 0,
-  }
-  const lowestTeam = sortedTeams[sortedTeams.length - 1] || { name: "the team at the back", points: 0 }
+    // Get lowest drivers and teams (for bottom of standings tweets)
+    const lowestDriver = sortedDrivers[sortedDrivers.length - 1] || {
+      name: "the driver at the back",
+      teamName: "their team",
+      points: 0,
+    }
+    const lowestTeam = sortedTeams[sortedTeams.length - 1] || { name: "the team at the back", points: 0 }
 
-  // Get Americar info
-  const americarTeam = teams.find((team) => team.id === "americar")
-  const americarDrivers = drivers.filter((driver) => driver.team === "americar")
-  const americarDriver1 = americarDrivers[0]?.name || "the Americar driver"
-  const americarDriver2 = americarDrivers[1]?.name || "the other Americar driver"
+    // Get Americar info
+    const americarTeam = teams.find((team) => team.id === "americar")
+    const americarDrivers = drivers.filter((driver) => driver.team === "americar")
+    const americarDriver1 = americarDrivers[0]?.name || "the Americar driver"
+    const americarDriver2 = americarDrivers[1]?.name || "the other Americar driver"
 
-  // Get Americar position in constructor standings
-  const americarPosition = sortedTeams.findIndex((team) => team.id === "americar") + 1
-  const isAmericarTopHalf = americarPosition <= Math.ceil(teams.length / 2)
+    // Get Americar position in constructor standings
+    const americarPosition = sortedTeams.findIndex((team) => team.id === "americar") + 1
+    const isAmericarTopHalf = americarPosition <= Math.ceil(teams.length / 2)
 
-  // Get last race winner if available
-  let lastRaceWinner = topDriver.name
-  let lastRaceSecond = secondDriver.name
-  let lastRaceThird = thirdDriver.name
-  if (currentRaceIndex > 0 && raceResults[currentRaceIndex - 1]) {
-    const winnerId = getDriverIdByPosition(raceResults[currentRaceIndex - 1], 1)
-    lastRaceWinner = getDriverNameById(drivers, winnerId)
+    // Get last race winner if available
+    let lastRaceWinner = topDriver.name
+    let lastRaceSecond = secondDriver.name
+    let lastRaceThird = thirdDriver.name
+    if (currentRaceIndex > 0 && raceResults[currentRaceIndex - 1]) {
+      const winnerId = getDriverIdByPosition(raceResults[currentRaceIndex - 1], 1)
+      lastRaceWinner = getDriverNameById(drivers, winnerId)
 
-    const secondId = getDriverIdByPosition(raceResults[currentRaceIndex - 1], 2)
-    lastRaceSecond = getDriverNameById(drivers, secondId)
+      const secondId = getDriverIdByPosition(raceResults[currentRaceIndex - 1], 2)
+      lastRaceSecond = getDriverNameById(drivers, secondId)
 
-    const thirdId = getDriverIdByPosition(raceResults[currentRaceIndex - 1], 3)
-    lastRaceThird = getDriverNameById(drivers, thirdId)
-  }
+      const thirdId = getDriverIdByPosition(raceResults[currentRaceIndex - 1], 3)
+      lastRaceThird = getDriverNameById(drivers, thirdId)
+    }
 
-  // Current race
-  const currentRace = races[currentRaceIndex]
-  // Next race (if available)
-  const nextRace = currentRaceIndex < races.length - 1 ? races[currentRaceIndex + 1] : "the final race"
+    // Current race
+    const currentRace = races[currentRaceIndex] || "the current race"
+    // Next race (if available)
+    const nextRace = currentRaceIndex < races.length - 1 ? races[currentRaceIndex + 1] : "the final race"
 
-  // Determine season state
-  const totalRaces = races.length
-  const isPreSeason = currentRaceIndex === 0 && !raceResults[0] // Before first race
-  const isMidSeasonBreak = currentRaceIndex === Math.floor(totalRaces / 2) // Middle of season
-  const isAbuDhabi = currentRaceIndex === totalRaces - 1 && !raceResults[currentRaceIndex] // Before final race
-  const isPostSeason = currentRaceIndex === totalRaces - 1 && raceResults[currentRaceIndex] // After final race
+    // Determine season state
+    const totalRaces = races.length
+    const racesRemaining = Math.max(0, totalRaces - currentRaceIndex)
+    const isPreSeason = currentRaceIndex === 0 && !raceResults[0] // Before first race
+    const isMidSeasonBreak = currentRaceIndex === Math.floor(totalRaces / 2) // Middle of season
+    const isAbuDhabi = currentRaceIndex === totalRaces - 1 && !raceResults[currentRaceIndex] // Before final race
+    const isPostSeason = currentRaceIndex === totalRaces - 1 && raceResults[currentRaceIndex] // After final race
 
-  // Champion info for post-season tweets
-  const championDriver = topDriver.name
-  const championTeam = topTeam.name
-  const championDriverTitles = "first" // This would need to be determined based on historical data
+    // Champion info for post-season tweets
+    const championDriver = topDriver.name
+    const championTeam = topTeam.name
+    const championDriverTitles = "first" // This would need to be determined based on historical data
 
-  // Filter tweets based on season state
-  let filteredTweetPool = [...tweetPool]
+    // Pre-calculate all the math expressions that might be used in tweets
+    const pointsDiffTop1Top2 = Math.abs((sortedDrivers[0]?.points || 0) - (sortedDrivers[1]?.points || 0))
+    const pointsDiffTop2Top3 = Math.abs((sortedDrivers[1]?.points || 0) - (sortedDrivers[2]?.points || 0))
+    const pointsDiffTeam1Team2 = Math.abs((sortedTeams[0]?.points || 0) - (sortedTeams[1]?.points || 0))
+    const pointsDiffTeam2Team3 = Math.abs((sortedTeams[1]?.points || 0) - (sortedTeams[2]?.points || 0))
+    const pointsDiffTeam3Team4 = Math.abs((sortedTeams[2]?.points || 0) - (sortedTeams[3]?.points || 0))
+    const pointsDiffTeam3Team5 = Math.abs((sortedTeams[2]?.points || 0) - (sortedTeams[4]?.points || 0))
+    const pointsDiffTeam4Team5 = Math.abs((sortedTeams[3]?.points || 0) - (sortedTeams[4]?.points || 0))
+    const pointsDiffTeam5Team6 = Math.abs((sortedTeams[4]?.points || 0) - (sortedTeams[5]?.points || 0))
+    const pointsDiffTeam6Team7 = Math.abs((sortedTeams[5]?.points || 0) - (sortedTeams[6]?.points || 0))
 
-  // If we're in a special period, only use tweets for that period
-  if (isPreSeason) {
-    filteredTweetPool = tweetPool.filter((tweet) => tweet.id.startsWith("preseason-"))
-    console.log("Using pre-season tweets")
-  } else if (isMidSeasonBreak) {
-    filteredTweetPool = tweetPool.filter((tweet) => tweet.id.startsWith("midseason-"))
-    console.log("Using mid-season break tweets")
-  } else if (isAbuDhabi) {
-    filteredTweetPool = tweetPool.filter((tweet) => tweet.id.startsWith("preabudhabi-"))
-    console.log("Using pre-Abu Dhabi tweets")
-  } else if (isPostSeason) {
-    filteredTweetPool = tweetPool.filter((tweet) => tweet.id.startsWith("postseason-"))
-    console.log("Using post-season tweets")
-  } else {
-    // For regular races, exclude special period tweets
-    filteredTweetPool = tweetPool.filter(
-      (tweet) =>
-        !tweet.id.startsWith("preseason-") &&
-        !tweet.id.startsWith("midseason-") &&
-        !tweet.id.startsWith("preabudhabi-") &&
-        !tweet.id.startsWith("postseason-"),
-    )
-    console.log("Using regular race tweets")
-  }
+    // Calculate positions needed to secure championship
+    const pointsNeededForTitle = (sortedDrivers[1]?.points || 0) - (sortedDrivers[0]?.points || 0) + 25
+    const positionNeededForTitle = Math.max(1, Math.ceil(pointsNeededForTitle / 25))
 
-  // Create a large pool of tweets with dynamic content
-  const dynamicTweetPool = filteredTweetPool.map((tweet) => {
-    // Replace placeholders with actual data
-    let content = tweet.content
-      // Top drivers and teams
-      .replace(/\{topDriver\}/g, topDriver.name)
-      .replace(/\{topDriverTeam\}/g, topDriver.teamName)
-      .replace(/\{topDriverPoints\}/g, topDriver.points.toString())
-      .replace(/\{secondDriver\}/g, secondDriver.name)
-      .replace(/\{thirdDriver\}/g, thirdDriver.name)
-      .replace(/\{thirdDriverPoints\}/g, thirdDriver.points.toString())
+    // Filter tweets based on season state
+    let filteredTweetPool = [...tweetPool]
 
-      // Midfield drivers
-      .replace(/\{fourthDriver\}/g, fourthDriver.name)
-      .replace(/\{fifthDriver\}/g, fifthDriver.name)
-      .replace(/\{sixthDriver\}/g, sixthDriver.name)
-      .replace(/\{seventhDriver\}/g, seventhDriver.name)
-      .replace(/\{eighthDriver\}/g, eighthDriver.name)
-      .replace(/\{ninthDriver\}/g, ninthDriver.name)
-      .replace(/\{tenthDriver\}/g, tenthDriver.name)
+    // If we're in a special period, only use tweets for that period
+    if (isPreSeason) {
+      filteredTweetPool = tweetPool.filter((tweet) => tweet.id.startsWith("preseason-"))
+    } else if (isMidSeasonBreak) {
+      filteredTweetPool = tweetPool.filter((tweet) => tweet.id.startsWith("midseason-"))
+    } else if (isAbuDhabi) {
+      filteredTweetPool = tweetPool.filter((tweet) => tweet.id.startsWith("preabudhabi-"))
+    } else if (isPostSeason) {
+      filteredTweetPool = tweetPool.filter((tweet) => tweet.id.startsWith("postseason-"))
+    } else {
+      // For regular races, exclude special period tweets
+      filteredTweetPool = tweetPool.filter(
+        (tweet) =>
+          !tweet.id.startsWith("preseason-") &&
+          !tweet.id.startsWith("midseason-") &&
+          !tweet.id.startsWith("preabudhabi-") &&
+          !tweet.id.startsWith("postseason-"),
+      )
+    }
 
-      // Teams
-      .replace(/\{topTeam\}/g, topTeam.name)
-      .replace(/\{secondTeam\}/g, secondTeam.name)
-      .replace(/\{thirdTeam\}/g, thirdTeam.name)
-      .replace(/\{fourthTeam\}/g, fourthTeam.name)
-      .replace(/\{fifthTeam\}/g, fifthTeam.name)
-      .replace(/\{sixthTeam\}/g, sixthTeam.name)
-      .replace(/\{seventhTeam\}/g, seventhTeam.name)
+    // Create a large pool of tweets with dynamic content
+    const dynamicTweetPool = filteredTweetPool.map((tweet) => {
+      // Replace placeholders with actual data
+      let content = tweet.content
+        // Top drivers and teams
+        .replace(/\{topDriver\}/g, topDriver.name)
+        .replace(/\{topDriverTeam\}/g, topDriver.teamName)
+        .replace(/\{topDriverPoints\}/g, String(topDriver.points))
+        .replace(/\{secondDriver\}/g, secondDriver.name)
+        .replace(/\{thirdDriver\}/g, thirdDriver.name)
+        .replace(/\{thirdDriverPoints\}/g, String(thirdDriver.points))
 
-      // Bottom of the grid
-      .replace(/\{lowestDriver\}/g, lowestDriver.name)
-      .replace(/\{lowestTeam\}/g, lowestTeam.name)
+        // Midfield drivers
+        .replace(/\{fourthDriver\}/g, fourthDriver.name)
+        .replace(/\{fifthDriver\}/g, fifthDriver.name)
+        .replace(/\{sixthDriver\}/g, sixthDriver.name)
+        .replace(/\{seventhDriver\}/g, seventhDriver.name)
+        .replace(/\{eighthDriver\}/g, eighthDriver.name)
+        .replace(/\{ninthDriver\}/g, ninthDriver.name)
+        .replace(/\{tenthDriver\}/g, tenthDriver.name)
 
-      // Americar team
-      .replace(/\{americarDriver1\}/g, americarDriver1)
-      .replace(/\{americarDriver2\}/g, americarDriver2)
-      .replace(/\{americarTeam\}/g, americarTeam?.name || "Americar")
-      .replace(/\{americarPosition\}/g, americarPosition.toString())
+        // Teams
+        .replace(/\{topTeam\}/g, topTeam.name)
+        .replace(/\{secondTeam\}/g, secondTeam.name)
+        .replace(/\{thirdTeam\}/g, thirdTeam.name)
+        .replace(/\{fourthTeam\}/g, fourthTeam.name)
+        .replace(/\{fifthTeam\}/g, fifthTeam.name)
+        .replace(/\{sixthTeam\}/g, sixthTeam.name)
+        .replace(/\{seventhTeam\}/g, seventhTeam.name)
 
-      // Race results
-      .replace(/\{lastRaceWinner\}/g, lastRaceWinner)
-      .replace(/\{lastRaceSecond\}/g, lastRaceSecond)
-      .replace(/\{lastRaceThird\}/g, lastRaceThird)
+        // Bottom of the grid
+        .replace(/\{lowestDriver\}/g, lowestDriver.name)
+        .replace(/\{lowestTeam\}/g, lowestTeam.name)
 
-      // Race info
-      .replace(/\{currentRace\}/g, currentRace)
-      .replace(/\{nextRace\}/g, nextRace)
-      .replace(/\{currentRaceIndex\}/g, (currentRaceIndex + 1).toString())
-      .replace(/\{totalRaces\}/g, totalRaces.toString())
+        // Americar team
+        .replace(/\{americarDriver1\}/g, americarDriver1)
+        .replace(/\{americarDriver2\}/g, americarDriver2)
+        .replace(/\{americarTeam\}/g, americarTeam?.name || "Americar")
+        .replace(/\{americarPosition\}/g, String(americarPosition))
 
-      // Champion info (for post-season)
-      .replace(/\{championDriver\}/g, championDriver)
-      .replace(/\{championTeam\}/g, championTeam)
-      .replace(/\{championDriverTitles\}/g, championDriverTitles)
+        // Race results
+        .replace(/\{lastRaceWinner\}/g, lastRaceWinner)
+        .replace(/\{lastRaceSecond\}/g, lastRaceSecond)
+        .replace(/\{lastRaceThird\}/g, lastRaceThird)
 
-    // Handle any math expressions in the content
-    content = content.replace(/\{Math\.abs$$(.*?)$$\}/g, (match, expression) => {
-      try {
-        // Extract the variables from the expression
-        const vars = expression.match(/sortedDrivers\[\d+\]\.points|sortedTeams\[\d+\]\.points|\d+/g) || []
+        // Race info
+        .replace(/\{currentRace\}/g, currentRace)
+        .replace(/\{nextRace\}/g, nextRace)
+        .replace(/\{currentRaceIndex\}/g, String(currentRaceIndex + 1))
+        .replace(/\{totalRaces\}/g, String(totalRaces))
 
-        // Replace variables with actual values
-        const resolvedExpression = vars.reduce((expr, variable) => {
-          if (variable.includes("sortedDrivers")) {
-            const index = Number.parseInt(variable.match(/\[(\d+)\]/)[1])
-            return expr.replace(variable, sortedDrivers[index]?.points || 0)
-          } else if (variable.includes("sortedTeams")) {
-            const index = Number.parseInt(variable.match(/\[(\d+)\]/)[1])
-            return expr.replace(variable, sortedTeams[index]?.points || 0)
-          }
-          return expr
-        }, expression)
+        // Champion info (for post-season)
+        .replace(/\{championDriver\}/g, championDriver)
+        .replace(/\{championTeam\}/g, championTeam)
+        .replace(/\{championDriverTitles\}/g, championDriverTitles)
 
-        // Evaluate the expression
-        return Math.abs(eval(resolvedExpression)).toString()
-      } catch (e) {
-        console.error("Error evaluating math expression:", e)
-        return "0"
+        // Pre-calculated math expressions
+        .replace(
+          /\{Math\.abs$$sortedDrivers\[0\]\.points - sortedDrivers\[1\]\.points$$\}/g,
+          String(pointsDiffTop1Top2),
+        )
+        .replace(
+          /\{Math\.abs$$sortedDrivers\[1\]\.points - sortedDrivers\[2\]\.points$$\}/g,
+          String(pointsDiffTop2Top3),
+        )
+        .replace(/\{Math\.abs$$sortedTeams\[0\]\.points - sortedTeams\[1\]\.points$$\}/g, String(pointsDiffTeam1Team2))
+        .replace(/\{Math\.abs$$sortedTeams\[1\]\.points - sortedTeams\[2\]\.points$$\}/g, String(pointsDiffTeam2Team3))
+        .replace(/\{Math\.abs$$sortedTeams\[2\]\.points - sortedTeams\[3\]\.points$$\}/g, String(pointsDiffTeam3Team4))
+        .replace(/\{Math\.abs$$sortedTeams\[2\]\.points - sortedTeams\[5\]\.points$$\}/g, String(pointsDiffTeam3Team5))
+        .replace(/\{Math\.abs$$sortedTeams\[3\]\.points - sortedTeams\[4\]\.points$$\}/g, String(pointsDiffTeam4Team5))
+        .replace(/\{Math\.abs$$sortedTeams\[4\]\.points - sortedTeams\[5\]\.points$$\}/g, String(pointsDiffTeam5Team6))
+        .replace(/\{Math\.abs$$sortedTeams\[5\]\.points - sortedTeams\[6\]\.points$$\}/g, String(pointsDiffTeam6Team7))
+
+        // Position needed for title
+        .replace(
+          /\{Math\.ceil$$\(sortedDrivers\[1\]\.points - sortedDrivers\[0\]\.points \+ 25$$ \/ 25\)\}/g,
+          String(positionNeededForTitle),
+        )
+
+        // Races remaining calculation
+        .replace(/\{totalRaces - currentRaceIndex\}/g, String(racesRemaining))
+
+        // Team points
+        .replace(/\{sortedTeams\[2\]\.points\}/g, String(sortedTeams[2]?.points || 0))
+        .replace(
+          /\{Math\.abs$$sortedTeams\[3\]\.points - sortedTeams\[4\]\.points$$ \+ 1\}/g,
+          String(pointsDiffTeam4Team5 + 1),
+        )
+
+        // Driver points
+        .replace(/\{currentRaceIndex - 1\}/g, String(Math.max(0, currentRaceIndex - 1)))
+        .replace(/\{currentRaceIndex - 2\}/g, String(Math.max(0, currentRaceIndex - 2)))
+        .replace(/\{currentRaceIndex - 3\}/g, String(Math.max(0, currentRaceIndex - 3)))
+        .replace(/\{currentRaceIndex - 5\}/g, String(Math.max(0, currentRaceIndex - 5)))
+
+      // Filter out tweets that make claims about Americar being a midfield team if they're not
+      if (content.includes("midfield") && content.includes("Americar") && !isAmericarTopHalf) {
+        // Replace with a more factual statement
+        content = content
+          .replace(/midfield contenders/g, "showing improvement")
+          .replace(/midfield battle/g, "improving their performance")
+          .replace(/midfield team/g, "developing team")
+      }
+
+      return {
+        ...tweet,
+        content,
       }
     })
 
-    // Handle Math.ceil expressions
-    content = content.replace(/\{Math\.ceil$$(.*?)$$\}/g, (match, expression) => {
-      try {
-        // Extract the variables from the expression
-        const vars = expression.match(/sortedDrivers\[\d+\]\.points|sortedTeams\[\d+\]\.points|\d+/g) || []
+    // Filter out already used tweets
+    const availableTweets = dynamicTweetPool.filter((tweet) => !usedTweetIds.includes(tweet.id))
 
-        // Replace variables with actual values
-        const resolvedExpression = vars.reduce((expr, variable) => {
-          if (variable.includes("sortedDrivers")) {
-            const index = Number.parseInt(variable.match(/\[(\d+)\]/)[1])
-            return expr.replace(variable, sortedDrivers[index]?.points || 0)
-          } else if (variable.includes("sortedTeams")) {
-            const index = Number.parseInt(variable.match(/\[(\d+)\]/)[1])
-            return expr.replace(variable, sortedTeams[index]?.points || 0)
-          }
-          return expr
-        }, expression)
+    // If we've used all tweets, reset the pool
+    const tweetsToUse = availableTweets.length >= 7 ? availableTweets : dynamicTweetPool
 
-        // Evaluate the expression
-        return Math.ceil(eval(resolvedExpression)).toString()
-      } catch (e) {
-        console.error("Error evaluating math expression:", e)
-        return "1"
-      }
-    })
+    // Determine how many tweets to show (between 7-12 depending on availability)
+    const numTweets = Math.min(12, Math.max(7, tweetsToUse.length / 3))
 
-    // Filter out tweets that make claims about Americar being a midfield team if they're not
-    if (content.includes("midfield") && content.includes("Americar") && !isAmericarTopHalf) {
-      // Replace with a more factual statement
-      content = content
-        .replace(/midfield contenders/g, "showing improvement")
-        .replace(/midfield battle/g, "improving their performance")
-        .replace(/midfield team/g, "developing team")
-    }
-
-    return {
-      ...tweet,
-      content,
-    }
-  })
-
-  // Filter out already used tweets
-  const availableTweets = dynamicTweetPool.filter((tweet) => !usedTweetIds.includes(tweet.id))
-
-  // If we've used all tweets, reset the pool
-  const tweetsToUse = availableTweets.length >= 12 ? availableTweets : dynamicTweetPool
-
-  // Determine how many tweets to show (between 7-12 depending on availability)
-  const numTweets = Math.min(12, Math.max(7, tweetsToUse.length / 3))
-
-  // Randomly select tweets from the pool
-  const shuffledTweets = [...tweetsToUse].sort(() => 0.5 - Math.random())
-  return shuffledTweets.slice(0, numTweets)
+    // Randomly select tweets from the pool
+    const shuffledTweets = [...tweetsToUse].sort(() => 0.5 - Math.random())
+    return shuffledTweets.slice(0, numTweets)
+  } catch (error) {
+    console.error("Error in generateTweetsFromPool:", error)
+    // Return a few basic tweets as fallback
+    return [
+      {
+        id: "fallback-1",
+        author: "F1 News",
+        handle: "F1News",
+        content: "The race weekend is underway! Stay tuned for more updates.",
+      },
+      {
+        id: "fallback-2",
+        author: "F1 News",
+        handle: "F1News",
+        content: "Teams are preparing for the upcoming sessions. Weather conditions look favorable.",
+      },
+      {
+        id: "fallback-3",
+        author: "F1 News",
+        handle: "F1News",
+        content: "The championship battle continues to heat up as we approach the next race.",
+      },
+    ]
+  }
 }
