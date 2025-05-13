@@ -1,13 +1,25 @@
+"use client"
+
+import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import type { Driver } from "@/lib/types"
+import type { Driver, RaceResult } from "@/lib/types"
 import { getTeamColor } from "@/lib/utils"
 
 interface DriversStandingsProps {
   drivers: Driver[]
   isSeasonComplete: boolean
+  raceResults: RaceResult[][]
+  fastestLaps: (string | null)[]
 }
 
-export default function DriversStandings({ drivers, isSeasonComplete }: DriversStandingsProps) {
+export default function DriversStandings({
+  drivers,
+  isSeasonComplete,
+  raceResults,
+  fastestLaps,
+}: DriversStandingsProps) {
+  const [hoveredDriver, setHoveredDriver] = useState<string | null>(null)
+
   // Sort drivers by points (descending)
   const sortedDrivers = [...drivers].sort((a, b) => b.points - a.points)
 
@@ -35,6 +47,8 @@ export default function DriversStandings({ drivers, isSeasonComplete }: DriversS
                 <tr
                   key={driver.id}
                   className={`border-b border-gray-800 hover:bg-[#252525] ${index === 0 ? "bg-[#252525]" : ""}`}
+                  onMouseOver={() => setHoveredDriver(driver.id)}
+                  onMouseOut={() => setHoveredDriver(null)}
                 >
                   <td className="py-3 px-4 font-mono font-bold text-white">{index + 1}</td>
                   <td className="py-3 px-4">

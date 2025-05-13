@@ -17,11 +17,13 @@ import {
   Download,
   Upload,
   AlertCircle,
+  History,
 } from "lucide-react"
 import DriversStandings from "@/components/drivers-standings"
 import ConstructorsStandings from "@/components/constructors-standings"
 import RaceInput from "@/components/race-input"
 import Newsroom from "@/components/newsroom"
+import PastResults from "@/components/past-results"
 import { initialDrivers, initialTeams, races } from "@/lib/f1-data"
 import type { Driver, Team, RaceResult } from "@/lib/types"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -31,7 +33,7 @@ export default function F1Tracker() {
   const [drivers, setDrivers] = useState<Driver[]>(initialDrivers)
   const [teams, setTeams] = useState<Team[]>(initialTeams)
   const [raceResults, setRaceResults] = useState<RaceResult[][]>([])
-  const [fastestLapDriver, setFastestLapDriver] = useState<string | null>(null)
+  const [fastestLaps, setFastestLaps] = useState<(string | null)[]>([])
   const [activeTab, setActiveTab] = useState("race")
   // Check if there's unsaved data
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
@@ -45,11 +47,21 @@ export default function F1Tracker() {
   useEffect(() => {
     const savedData = localStorage.getItem("f1TrackerData")
     if (savedData) {
-      const { savedDrivers, savedTeams, savedRaceResults, savedCurrentRaceIndex } = JSON.parse(savedData)
+      const { savedDrivers, savedTeams, savedRaceResults, savedCurrentRaceIndex, savedFastestLaps } =
+        JSON.parse(savedData)
       setDrivers(savedDrivers)
       setTeams(savedTeams)
       setRaceResults(savedRaceResults)
       setCurrentRaceIndex(savedCurrentRaceIndex)
+
+      // Handle fastestLaps for backward compatibility
+      if (savedFastestLaps) {
+        setFastestLaps(savedFastestLaps)
+      } else {
+        // Create a new array with the same length as raceResults
+        const newFastestLaps: (string | null)[] = Array(savedRaceResults.length).fill(null)
+        setFastestLaps(newFastestLaps)
+      }
     }
   }, [])
 
@@ -60,6 +72,7 @@ export default function F1Tracker() {
       savedTeams: teams,
       savedRaceResults: raceResults,
       savedCurrentRaceIndex: currentRaceIndex,
+      savedFastestLaps: fastestLaps,
     }
     localStorage.setItem("f1TrackerData", JSON.stringify(dataToSave))
     setHasUnsavedChanges(false)
@@ -82,9 +95,11 @@ export default function F1Tracker() {
       setDrivers(initialDrivers)
       setTeams(initialTeams)
       setRaceResults([])
+      setFastestLaps([])
       setCurrentRaceIndex(0)
       localStorage.removeItem("f1TrackerData")
       localStorage.removeItem("f1TrackerNewsroom")
+      localStorage.removeItem("f1TrackerUsedTweets")
     }
   }
 
@@ -97,7 +112,8 @@ export default function F1Tracker() {
         teams,
         raceResults,
         currentRaceIndex,
-        version: "1.0", // Adding version for future compatibility
+        fastestLaps,
+        version: "1.1", // Updated version for new features
         timestamp: new Date().toISOString(),
       }
 
@@ -165,12 +181,22 @@ export default function F1Tracker() {
         setRaceResults(importedData.raceResults)
         setCurrentRaceIndex(importedData.currentRaceIndex || 0)
 
+        // Handle fastestLaps for backward compatibility
+        if (importedData.fastestLaps) {
+          setFastestLaps(importedData.fastestLaps)
+        } else {
+          // Create a new array with the same length as raceResults
+          const newFastestLaps: (string | null)[] = Array(importedData.raceResults.length).fill(null)
+          setFastestLaps(newFastestLaps)
+        }
+
         // Save to localStorage
         const dataToSave = {
           savedDrivers: importedData.drivers,
           savedTeams: importedData.teams,
           savedRaceResults: importedData.raceResults,
           savedCurrentRaceIndex: importedData.currentRaceIndex || 0,
+          savedFastestLaps: importedData.fastestLaps || Array(importedData.raceResults.length).fill(null),
         }
         localStorage.setItem("f1TrackerData", JSON.stringify(dataToSave))
 
@@ -225,7 +251,12 @@ export default function F1Tracker() {
     const updatedRaceResults = [...raceResults]
     updatedRaceResults[currentRaceIndex] = results
     setRaceResults(updatedRaceResults)
-    setFastestLapDriver(fastestLap)
+
+    // Update fastest laps
+    const updatedFastestLaps = [...fastestLaps]
+    updatedFastestLaps[currentRaceIndex] = fastestLap
+    setFastestLaps(updatedFastestLaps)
+
     setHasUnsavedChanges(true)
 
     // Update drivers points
@@ -386,6 +417,10 @@ export default function F1Tracker() {
             <Users className="h-4 w-4 mr-2" />
             Constructors Championship
           </TabsTrigger>
+          <TabsTrigger value="past-results" className="data-[state=active]:bg-[#e10600]">
+            <History className="h-4 w-4 mr-2" />
+            Past Results
+          </TabsTrigger>
           <TabsTrigger value="newsroom" className="data-[state=active]:bg-[#e10600]">
             <Newspaper className="h-4 w-4 mr-2" />
             Newsroom
@@ -420,7 +455,12 @@ export default function F1Tracker() {
         </TabsContent>
 
         <TabsContent value="drivers">
-          <DriversStandings drivers={drivers} isSeasonComplete={isSeasonComplete} />
+          <DriversStandings
+            drivers={drivers}
+            isSeasonComplete={isSeasonComplete}
+            raceResults={raceResults}
+            fastestLaps={fastestLaps}
+          />
           {!isSeasonComplete && raceResults[currentRaceIndex] && currentRaceIndex < races.length - 1 && (
             <div className="mt-6 text-center">
               <Button onClick={goToNextRace} className="bg-[#e10600] hover:bg-[#b30500]">
@@ -431,7 +471,13 @@ export default function F1Tracker() {
         </TabsContent>
 
         <TabsContent value="constructors">
-          <ConstructorsStandings teams={teams} isSeasonComplete={isSeasonComplete} />
+          <ConstructorsStandings
+            teams={teams}
+            drivers={drivers}
+            isSeasonComplete={isSeasonComplete}
+            raceResults={raceResults}
+            fastestLaps={fastestLaps}
+          />
           {!isSeasonComplete && raceResults[currentRaceIndex] && currentRaceIndex < races.length - 1 && (
             <div className="mt-6 text-center">
               <Button onClick={goToNextRace} className="bg-[#e10600] hover:bg-[#b30500]">
@@ -439,6 +485,10 @@ export default function F1Tracker() {
               </Button>
             </div>
           )}
+        </TabsContent>
+
+        <TabsContent value="past-results">
+          <PastResults drivers={drivers} raceResults={raceResults} fastestLaps={fastestLaps} />
         </TabsContent>
 
         <TabsContent value="newsroom">

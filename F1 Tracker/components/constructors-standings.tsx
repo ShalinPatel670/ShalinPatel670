@@ -1,13 +1,27 @@
+"use client"
+
+import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import type { Team } from "@/lib/types"
+import type { Team, RaceResult, Driver } from "@/lib/types"
 import { getTeamColor } from "@/lib/utils"
 
 interface ConstructorsStandingsProps {
   teams: Team[]
+  drivers: Driver[]
   isSeasonComplete: boolean
+  raceResults: RaceResult[][]
+  fastestLaps: (string | null)[]
 }
 
-export default function ConstructorsStandings({ teams, isSeasonComplete }: ConstructorsStandingsProps) {
+export default function ConstructorsStandings({
+  teams,
+  drivers,
+  isSeasonComplete,
+  raceResults,
+  fastestLaps,
+}: ConstructorsStandingsProps) {
+  const [hoveredTeam, setHoveredTeam] = useState<string | null>(null)
+
   // Sort teams by points (descending)
   const sortedTeams = [...teams].sort((a, b) => b.points - a.points)
 
@@ -34,6 +48,8 @@ export default function ConstructorsStandings({ teams, isSeasonComplete }: Const
                 <tr
                   key={team.id}
                   className={`border-b border-gray-800 hover:bg-[#252525] ${index === 0 ? "bg-[#252525]" : ""}`}
+                  onMouseOver={() => setHoveredTeam(team.id)}
+                  onMouseOut={() => setHoveredTeam(null)}
                 >
                   <td className="py-3 px-4 font-mono font-bold text-white">{index + 1}</td>
                   <td className="py-3 px-4">
