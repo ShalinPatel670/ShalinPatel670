@@ -1,5 +1,5 @@
  👋 Hi, I’m @ShalinPatel670!
- I'm passionate about software development (especially ML/AI), semiconductors, and policy.
+ I care deeply about software development (especially low-level), semiconductors, and policy.
  
  :)
 
